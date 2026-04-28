@@ -78,7 +78,7 @@ export const NewArrivals = () => {
 
   return (
     <section
-      className="py-24 lg:py-32 border-b border-slate-100 relative overflow-hidden"
+      className="py-16 lg:py-32 border-b border-slate-100 relative overflow-hidden"
       id="new-arrivals"
       style={{ backgroundColor: '#FAFAFA' }}
     >
@@ -93,7 +93,7 @@ export const NewArrivals = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 md:mb-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -101,31 +101,31 @@ export const NewArrivals = () => {
             transition={{ duration: 0.6 }}
             className="max-w-2xl"
           >
-            <div className="inline-flex items-center gap-3 mb-6">
-              <div className="h-px w-10 bg-primary" />
-              <span className="text-silver font-medium text-xs tracking-[0.3em] uppercase">
+            <div className="inline-flex items-center gap-3 mb-4 md:mb-6">
+              <div className="h-px w-8 md:w-10 bg-primary" />
+              <span className="text-silver font-medium text-[10px] md:text-xs tracking-[0.3em] uppercase">
                 Just Added
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium text-primary leading-[1.1] tracking-tight">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-medium text-primary leading-[1.1] tracking-tight">
               New Arrivals
             </h2>
           </motion.div>
         </div>
 
-        {/* Grid */}
+        {/* Grid / Slider */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8"
+          className="flex md:grid md:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-8 md:pb-0 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] w-screen md:w-auto"
         >
           {arrivals.map((watch, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 cursor-pointer"
+              className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 cursor-pointer w-[80vw] sm:w-[45vw] md:w-auto min-w-[80vw] sm:min-w-[45vw] md:min-w-0 snap-center shrink-0"
               style={{
                 boxShadow: 'none',
                 transition: 'box-shadow 0.5s ease, transform 0.5s ease',
@@ -156,7 +156,7 @@ export const NewArrivals = () => {
                   alt={`${watch.brand} ${watch.model}`}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
-                  className="object-cover object-center transition-transform duration-[1400ms] ease-out group-hover:scale-105"
+                  className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
                   priority={index < 4}
                 />
                 <div
@@ -188,6 +188,8 @@ export const NewArrivals = () => {
               </div>
             </motion.div>
           ))}
+          {/* Mobile Spacer */}
+          <div className="w-4 shrink-0 md:hidden" aria-hidden="true" />
         </motion.div>
 
         {/* CTA */}

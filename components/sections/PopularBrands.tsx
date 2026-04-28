@@ -18,22 +18,22 @@ export const PopularBrands = () => {
   const duplicatedBrands = [...brands, ...brands, ...brands, ...brands];
 
   return (
-    <section className="py-24 bg-[#F8F9FA] border-b border-slate-200 relative overflow-hidden">
+    <section className="py-16 lg:py-24 bg-[#F8F9FA] border-b border-slate-200 relative overflow-hidden">
       {/* Background Accent */}
       <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-silver/20 to-transparent" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 lg:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="text-[10px] font-bold tracking-[0.4em] text-silver uppercase mb-4 block">
+            <span className="text-[10px] font-bold tracking-[0.4em] text-silver uppercase mb-3 lg:mb-4 block">
               Trusted Names
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium text-primary tracking-tight mb-6">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-medium text-primary tracking-tight mb-4 lg:mb-6">
               Popular Luxury Brands
             </h2>
             <p className="text-slate-500 max-w-2xl mx-auto text-sm md:text-base tracking-wide leading-relaxed">
@@ -44,7 +44,7 @@ export const PopularBrands = () => {
       </div>
 
       {/* Premium Horizontal Logo Rail */}
-      <div className="relative w-full py-12 bg-white/50 backdrop-blur-sm border-y border-slate-100 group">
+      <div className="relative w-full py-8 lg:py-12 bg-white/50 backdrop-blur-sm border-y border-slate-100 group">
         {/* Gradient Overlays for Fade Effect */}
         <div className="absolute inset-y-0 left-0 w-32 bg-linear-to-r from-[#F8F9FA] to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-32 bg-linear-to-l from-[#F8F9FA] to-transparent z-10 pointer-events-none" />

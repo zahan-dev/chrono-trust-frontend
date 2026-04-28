@@ -114,7 +114,7 @@ export const Header = () => {
           </motion.div>
         )}
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between relative">
           
           {/* Left: Hamburger Menu (Always visible) */}
           <div className="flex-1 flex items-center">
@@ -135,7 +135,7 @@ export const Header = () => {
           {/* Center: Logo */}
           <motion.a 
             href="#" 
-            className="relative z-10 shrink-0 flex items-center justify-center mx-4"
+            className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -150,12 +150,12 @@ export const Header = () => {
           </motion.a>
 
           {/* Right: CTAs */}
-          <div className="flex-1 flex items-center justify-end gap-3 sm:gap-4">
+          <div className="hidden lg:flex flex-1 items-center justify-end gap-3 sm:gap-4">
             <Button 
               variant="outline" 
               size="sm" 
               href="#sell" 
-              className="hidden lg:flex border-silver/30 text-white hover:bg-silver hover:text-primary rounded-none text-xs tracking-wider uppercase px-5 py-2.5 transition-all shadow-none"
+              className="border-silver/30 text-white hover:bg-silver hover:text-primary rounded-none text-xs tracking-wider uppercase px-5 py-2.5 transition-all shadow-none"
             >
               Sell Watch
             </Button>
@@ -163,10 +163,10 @@ export const Header = () => {
               variant="primary" 
               size="sm" 
               href={whatsappUrl} 
-              className="bg-primary hover:bg-primary/90 text-white rounded-none text-xs font-medium tracking-wider uppercase px-4 sm:px-6 py-2.5 transition-all shadow-none flex items-center gap-2"
+              className="bg-primary hover:bg-primary/90 text-white rounded-none text-xs font-medium tracking-wider uppercase px-6 py-2.5 transition-all shadow-none flex items-center gap-2"
             >
-              <MessageCircle className="w-4 h-4 hidden sm:block" />
-              Chat <span className="hidden sm:inline">on WhatsApp</span>
+              <MessageCircle className="w-4 h-4" />
+              Chat on WhatsApp
             </Button>
           </div>
 
@@ -181,7 +181,7 @@ export const Header = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 bg-primary z-[55] flex flex-col h-screen overflow-y-auto"
+            className="fixed inset-0 bg-primary z-55 flex flex-col h-screen overflow-y-auto"
           >
             {/* Background Image/Texture for Menu */}
             <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-luminosity">
@@ -256,21 +256,21 @@ export const Header = () => {
                   </ul>
                 </div>
 
-                {/* Right side contact info (Desktop only) */}
+                {/* Right side contact info (Desktop and Mobile) */}
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5, duration: 0.8 }}
-                  className="hidden lg:flex lg:col-span-5 flex-col justify-center border-l border-white/10 pl-12"
+                  className="flex lg:col-span-5 flex-col justify-center border-t lg:border-t-0 lg:border-l border-white/10 pt-8 mt-4 lg:pt-0 lg:mt-0 lg:pl-12 pb-12 lg:pb-0"
                 >
-                  <div className="space-y-12 max-w-sm">
-                    <div>
+                  <div className="space-y-10 lg:space-y-12 max-w-sm">
+                    <div className="hidden lg:block">
                       <h4 className="text-white/50 text-xs font-medium tracking-[0.2em] uppercase mb-4">Contact</h4>
                       <a href="mailto:info@chronotrust.io" className="block text-2xl font-serif text-white/90 hover:text-white mb-2 transition-colors">info@chronotrust.io</a>
                       <a href="tel:+17328329938" className="block text-2xl font-serif text-white/90 hover:text-white transition-colors">+1 (732) 832-9938</a>
                     </div>
                     
-                    <div>
+                    <div className="hidden lg:block">
                       <h4 className="text-white/50 text-xs font-medium tracking-[0.2em] uppercase mb-4">Location</h4>
                       <p className="text-lg font-serif text-white/80 leading-relaxed">
                         By Appointment Only<br />
@@ -280,13 +280,13 @@ export const Header = () => {
                     </div>
 
                     <div>
-                      <h4 className="text-white/50 text-xs font-medium tracking-[0.2em] uppercase mb-4">Connect</h4>
-                      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-4">
-                        <a href="#contact" className="w-full sm:w-auto text-center px-8 py-4 border border-silver/30 rounded-none text-silver text-sm tracking-widest uppercase hover:bg-silver hover:text-white transition-all">
-                          Contact Us
+                      <h4 className="hidden lg:block text-white/50 text-xs font-medium tracking-[0.2em] uppercase mb-4">Connect</h4>
+                      <div className="flex flex-col sm:flex-row items-center gap-4 mt-2 lg:mt-4">
+                        <a href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}`} className="w-full text-center px-8 py-4 bg-primary text-white rounded-none text-sm tracking-widest uppercase hover:bg-primary/90 transition-all flex items-center justify-center gap-2 border border-primary">
+                          <MessageCircle className="w-4 h-4" /> Chat on WhatsApp
                         </a>
-                        <a href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}`} className="w-full sm:w-auto text-center px-8 py-4 bg-primary text-white rounded-none text-sm tracking-widest uppercase hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
-                          <MessageCircle className="w-4 h-4" /> WhatsApp
+                        <a href="#contact" className="w-full text-center px-8 py-4 border border-silver/30 rounded-none text-silver text-sm tracking-widest uppercase hover:bg-silver hover:text-primary transition-all">
+                          Book Consultation
                         </a>
                       </div>
                     </div>
