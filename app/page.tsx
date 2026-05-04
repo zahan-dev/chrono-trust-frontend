@@ -3,7 +3,6 @@ import { HeroSection } from '@/components/sections/HeroSection';
 import { PopularBrands } from '@/components/sections/PopularBrands';
 import { NewArrivals } from '@/components/sections/NewArrivals';
 import { TrustSection } from '@/components/sections/TrustSection';
-import { FeaturedWatches } from '@/components/sections/FeaturedWatches';
 import { ServicesSection } from '@/components/sections/ServicesSection';
 import { ProcessSection } from '@/components/sections/ProcessSection';
 import { AppointmentFAQSection } from '@/components/sections/AppointmentFAQSection';
@@ -22,11 +21,11 @@ export default function Home() {
           <TrustSection />
           <PopularBrands />
           <NewArrivals />
-          <ContactTestimonialsSection />
           {/* <FeaturedWatches /> */}
           <ServicesSection />
           <ProcessSection />
           {/* <InstagramSection /> */}
+          <ContactTestimonialsSection />
           <AppointmentFAQSection />
         </div>
       </main>

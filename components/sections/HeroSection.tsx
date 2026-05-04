@@ -58,20 +58,7 @@ export const HeroSection = () => {
           initial="hidden"
           animate="visible"
           className="space-y-6 md:space-y-8 mt-8 md:mt-16 w-full"
-        >
-          {/* Trust Stars */}
-          <motion.div variants={itemVariants} className="flex flex-col items-center gap-2 md:gap-3">
-            <div className="flex gap-1.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 md:w-5 md:h-5 text-[#a8b5c4] fill-[#a8b5c4] drop-shadow-[0_0_12px_rgba(168,181,196,0.6)]" />
-              ))}
-            </div>
-            <span className="text-[#a8b5c4] font-serif italic text-xs md:text-sm tracking-[0.15em] uppercase">
-              5-Star Trusted Service
-            </span>
-          </motion.div>
-
-          
+        > 
           {/* Main Heading */}
           <motion.div variants={itemVariants} className="space-y-4 md:space-y-6">
             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-serif font-medium leading-[1.15] md:leading-[1.1] text-white tracking-tight drop-shadow-2xl px-2">

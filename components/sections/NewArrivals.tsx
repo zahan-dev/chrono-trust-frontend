@@ -119,7 +119,7 @@ export const NewArrivals = () => {
 
   return (
     <section
-      className="py-16 lg:py-32 border-b border-slate-100 relative overflow-hidden"
+      className="py-12 lg:py-16 border-b border-slate-100 relative overflow-hidden"
       id="new-arrivals"
       style={{ backgroundColor: '#FAFAFA' }}
     >

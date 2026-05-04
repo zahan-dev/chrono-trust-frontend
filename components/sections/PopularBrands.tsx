@@ -19,9 +19,9 @@ export const PopularBrands = () => {
   const duplicatedBrands = [...brands, ...brands, ...brands, ...brands];
 
   return (
-    <section className="py-16 lg:py-24 bg-white border-b border-slate-200 relative overflow-hidden">
+    <section className="py-12 lg:py-16 bg-white border-b border-slate-200 relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-        <div className="text-center mb-10 lg:mb-16">
+        <div className="text-center mb-6 lg:mb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -34,7 +34,7 @@ export const PopularBrands = () => {
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-medium text-primary tracking-tight mb-4 lg:mb-6">
               Popular Luxury Brands
             </h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-sm md:text-base tracking-wide leading-relaxed">
+            <p className="text-slate-500 max-w-2xl mx-auto text-sm md:text-base tracking-wide leading-relaxed hidden sm:block">
               Explore iconic timepieces from the world&apos;s most respected watchmakers.
             </p>
           </motion.div>
@@ -42,7 +42,7 @@ export const PopularBrands = () => {
       </div>
 
       {/* Premium Horizontal Logo Rail */}
-      <div className="relative w-full py-8 lg:py-12 group">
+      <div className="relative w-full py-4 lg:py-6 group">
         {/* Gradient Overlays for Fade Effect */}
         <div className="absolute inset-y-0 left-0 w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none" />
@@ -62,15 +62,15 @@ export const PopularBrands = () => {
             {duplicatedBrands.map((brand, idx) => (
               <div
                 key={idx}
-                className="relative flex flex-col items-center justify-center cursor-pointer transition-all duration-500 group/item min-w-30 md:min-w-40"
+                className="relative flex flex-col items-center justify-center cursor-pointer transition-all duration-500 group/item min-w-24 md:min-w-32"
               >
                 {/* Brand Image Logo */}
-                <div className="relative w-full h-16 md:h-20 mb-4 flex items-center justify-center filter grayscale opacity-50 group-hover/item:grayscale-0 group-hover/item:opacity-100 transition-all duration-500 transform group-hover/item:scale-110">
+                <div className="relative w-full h-12 md:h-16 flex items-center justify-center filter grayscale opacity-50 group-hover/item:grayscale-0 group-hover/item:opacity-100 transition-all duration-500 transform group-hover/item:scale-110">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img 
                     src={brand.logo} 
                     alt={`${brand.name} logo`} 
-                    className="max-w-[100px] md:max-w-[140px] max-h-full object-contain"
+                    className="max-w-20 md:max-w-28 max-h-full object-contain"
                   />
                 </div>
               </div>

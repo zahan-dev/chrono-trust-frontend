@@ -23,7 +23,7 @@ const testimonials = [
 
 export const ContactTestimonialsSection = () => {
   return (
-    <section className="py-24 lg:py-32 bg-white border-b border-slate-200 relative overflow-hidden" id="testimonials">
+    <section className="py-16 bg-white border-b border-slate-200 relative overflow-hidden" id="testimonials">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}

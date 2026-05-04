@@ -35,7 +35,7 @@ export const AppointmentFAQSection = () => {
   ];
 
   return (
-    <section className="py-24 lg:py-32 bg-[#FAFAFA] border-b border-slate-200 relative overflow-hidden" id="faq-contact">
+    <section className="py-16 lg:py-24 bg-[#FAFAFA] border-b border-slate-200 relative overflow-hidden" id="faq-contact">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         
         <div className="grid lg:grid-cols-12 gap-16 lg:gap-12 items-start">
