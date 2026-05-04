@@ -26,7 +26,7 @@ export default function Home() {
           {/* <FeaturedWatches /> */}
           <ServicesSection />
           <ProcessSection />
-          <InstagramSection />
+          {/* <InstagramSection /> */}
           <AppointmentFAQSection />
         </div>
       </main>
