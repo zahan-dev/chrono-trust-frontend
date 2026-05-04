@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '../ui/Button';
-import { MessageCircle, ChevronDown, Phone } from 'lucide-react';
+import { MessageCircle, ChevronDown, Phone, Star } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const FacebookIcon = ({ className }: { className?: string }) => (
@@ -93,16 +93,18 @@ export const Header = () => {
             className="hidden md:flex justify-between items-center pb-4 mb-4 border-b border-white/10 text-white/70 text-xs font-medium tracking-wider uppercase"
           >
             <div className="flex items-center gap-6">
-              <div className="flex items-center gap-4">
-                <a href="#" className="text-white/60 hover:text-white transition-colors duration-300">
-                  <FacebookIcon className="w-4 h-4" />
-                </a>
-                <a href="#" className="text-white/60 hover:text-white transition-colors duration-300">
-                  <TwitterIcon className="w-4 h-4" />
-                </a>
-                <a href="#" className="text-white/60 hover:text-white transition-colors duration-300">
-                  <InstagramIcon className="w-4 h-4" />
-                </a>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1 text-yellow-400">
+                  <Star className="w-3.5 h-3.5 fill-current" />
+                  <Star className="w-3.5 h-3.5 fill-current" />
+                  <Star className="w-3.5 h-3.5 fill-current" />
+                  <Star className="w-3.5 h-3.5 fill-current" />
+                  <Star className="w-3.5 h-3.5 fill-current" />
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="font-semibold text-white">5.0</span>
+                  <span className="text-white/60">Google Reviews</span>
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-6">
@@ -135,7 +137,7 @@ export const Header = () => {
           {/* Center: Logo */}
           <motion.a 
             href="#" 
-            className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center"
+            className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center -mt-2 md:-mt-3"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -144,7 +146,7 @@ export const Header = () => {
               alt="ChronoTrust Logo" 
               width={400} 
               height={120}
-              className={`w-auto object-contain brightness-0 invert transition-all duration-500 ${isScrolled ? 'h-10 md:h-12' : 'h-14 md:h-16'}`}
+              className={`w-auto object-contain brightness-0 invert transition-all duration-500 ${isScrolled ? 'h-12 md:h-14' : 'h-16 md:h-20'}`}
               priority
             />
           </motion.a>
@@ -155,7 +157,7 @@ export const Header = () => {
               variant="outline" 
               size="sm" 
               href="#sell" 
-              className="border-silver/30 text-white hover:bg-silver hover:text-primary rounded-none text-xs tracking-wider uppercase px-5 py-2.5 transition-all shadow-none"
+              className="border-silver/30 text-white hover:bg-silver hover:text-primary rounded-full text-xs tracking-wider uppercase px-5 py-2.5 transition-all shadow-none"
             >
               Sell Watch
             </Button>
@@ -163,7 +165,7 @@ export const Header = () => {
               variant="primary" 
               size="sm" 
               href={whatsappUrl} 
-              className="bg-primary hover:bg-primary/90 text-white rounded-none text-xs font-medium tracking-wider uppercase px-6 py-2.5 transition-all shadow-none flex items-center gap-2"
+              className="bg-primary hover:bg-primary/90 text-white rounded-full text-xs font-medium tracking-wider uppercase px-6 py-2.5 transition-all shadow-none flex items-center gap-2"
             >
               <MessageCircle className="w-4 h-4" />
               Chat on WhatsApp
@@ -282,10 +284,10 @@ export const Header = () => {
                     <div>
                       <h4 className="hidden lg:block text-white/50 text-xs font-medium tracking-[0.2em] uppercase mb-4">Connect</h4>
                       <div className="flex flex-col sm:flex-row items-center gap-4 mt-2 lg:mt-4">
-                        <a href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}`} className="w-full text-center px-8 py-4 bg-primary text-white rounded-none text-sm tracking-widest uppercase hover:bg-primary/90 transition-all flex items-center justify-center gap-2 border border-primary">
+                        <a href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}`} className="w-full text-center px-8 py-4 bg-primary text-white rounded-full text-sm tracking-widest uppercase hover:bg-primary/90 transition-all flex items-center justify-center gap-2 border border-primary">
                           <MessageCircle className="w-4 h-4" /> Chat on WhatsApp
                         </a>
-                        <a href="#contact" className="w-full text-center px-8 py-4 border border-silver/30 rounded-none text-silver text-sm tracking-widest uppercase hover:bg-silver hover:text-primary transition-all">
+                        <a href="#contact" className="w-full text-center px-8 py-4 border border-silver/30 rounded-full text-silver text-sm tracking-widest uppercase hover:bg-silver hover:text-primary transition-all">
                           Book Consultation
                         </a>
                       </div>

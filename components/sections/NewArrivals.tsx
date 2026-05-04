@@ -1,12 +1,15 @@
 'use client';
 
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '../ui/Button';
-import { ArrowRight, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const NewArrivals = () => {
   const whatsappNumber = '+17328329938';
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const arrivals = [
     {
@@ -76,6 +79,28 @@ export const NewArrivals = () => {
     },
   };
 
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const scrollPosition = scrollRef.current.scrollLeft;
+    // Calculate the width of one single snap item (total scrollable width / total items)
+    const itemWidth = scrollRef.current.scrollWidth / arrivals.length;
+    setActiveIndex(Math.round(scrollPosition / itemWidth));
+  };
+
+  const scrollToIndex = (index: number) => {
+    if (!scrollRef.current) return;
+    const itemWidth = scrollRef.current.scrollWidth / arrivals.length;
+    scrollRef.current.scrollTo({ left: itemWidth * index, behavior: 'smooth' });
+  };
+
+  const scrollNext = () => {
+    if (activeIndex < arrivals.length - 1) scrollToIndex(activeIndex + 1);
+  };
+
+  const scrollPrev = () => {
+    if (activeIndex > 0) scrollToIndex(activeIndex - 1);
+  };
+
   return (
     <section
       className="py-16 lg:py-32 border-b border-slate-100 relative overflow-hidden"
@@ -111,21 +136,55 @@ export const NewArrivals = () => {
               New Arrivals
             </h2>
           </motion.div>
+
+          {/* Slider Navigation (Desktop & Tablet) */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6 }}
+            className="hidden md:flex items-center gap-3"
+          >
+            <button 
+              onClick={scrollPrev}
+              disabled={activeIndex === 0}
+              className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                activeIndex === 0 
+                  ? 'border-slate-200 text-slate-300 cursor-not-allowed' 
+                  : 'border-silver/50 text-primary hover:bg-primary hover:text-white hover:border-primary'
+              }`}
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button 
+              onClick={scrollNext}
+              disabled={activeIndex === arrivals.length - 1}
+              className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                activeIndex === arrivals.length - 1 
+                  ? 'border-slate-200 text-slate-300 cursor-not-allowed' 
+                  : 'border-silver/50 text-primary hover:bg-primary hover:text-white hover:border-primary'
+              }`}
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </motion.div>
         </div>
 
         {/* Grid / Slider */}
         <motion.div
+          ref={scrollRef}
+          onScroll={handleScroll}
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="flex md:grid md:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-8 md:pb-0 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] w-screen md:w-auto"
+          className="flex gap-4 md:gap-6 lg:gap-8 overflow-x-auto snap-x snap-mandatory pb-8 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] w-screen lg:w-full scroll-smooth"
         >
           {arrivals.map((watch, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 cursor-pointer w-[80vw] sm:w-[45vw] md:w-auto min-w-[80vw] sm:min-w-[45vw] md:min-w-0 snap-center shrink-0"
+              className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 cursor-pointer w-[80vw] sm:w-[45vw] md:w-[calc(50%-12px)] lg:w-[calc(25%-24px)] shrink-0 snap-start"
               style={{
                 boxShadow: 'none',
                 transition: 'box-shadow 0.5s ease, transform 0.5s ease',
@@ -191,6 +250,22 @@ export const NewArrivals = () => {
           {/* Mobile Spacer */}
           <div className="w-4 shrink-0 md:hidden" aria-hidden="true" />
         </motion.div>
+
+        {/* Slider Dots */}
+        <div className="flex items-center justify-center gap-2 mt-4 md:mt-8">
+          {arrivals.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => scrollToIndex(index)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                activeIndex === index
+                  ? 'w-6 bg-primary'
+                  : 'w-1.5 bg-primary/20 hover:bg-primary/40'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
 
         {/* CTA */}
         <motion.div
