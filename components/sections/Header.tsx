@@ -81,8 +81,8 @@ export const Header = () => {
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-primary/95 backdrop-blur-xl py-3 border-b border-white/10 shadow-xl' 
-          : 'bg-transparent py-6 border-b border-transparent'
+          ? 'bg-primary/95 backdrop-blur-xl py-3 shadow-xl' 
+          : 'bg-transparent py-6'
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-350">
@@ -90,7 +90,7 @@ export const Header = () => {
         {!isScrolled && (
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-            className="hidden md:flex justify-between items-center pb-4 mb-4 border-b border-white/10 text-white/70 text-xs font-medium tracking-wider uppercase"
+            className="hidden md:flex justify-between items-center pb-2 mb-4 text-white/70 text-xs font-medium tracking-wider uppercase"
           >
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-3">
@@ -137,16 +137,16 @@ export const Header = () => {
           {/* Center: Logo */}
           <motion.a 
             href="#" 
-            className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center -mt-2 md:-mt-3"
+            className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center -mt-2 md:-mt-4"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             <Image 
               src="/logo.png" 
               alt="ChronoTrust Logo" 
-              width={400} 
-              height={120}
-              className={`w-auto object-contain brightness-0 invert transition-all duration-500 ${isScrolled ? 'h-12 md:h-14' : 'h-16 md:h-20'}`}
+              width={600} 
+              height={180}
+              className={`w-auto object-contain brightness-0 invert transition-all duration-500 ${isScrolled ? 'h-16 md:h-20' : 'h-24 md:h-32'}`}
               priority
             />
           </motion.a>

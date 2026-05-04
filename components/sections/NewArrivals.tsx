@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '../ui/Button';
 import { ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
@@ -94,12 +94,28 @@ export const NewArrivals = () => {
   };
 
   const scrollNext = () => {
-    if (activeIndex < arrivals.length - 1) scrollToIndex(activeIndex + 1);
+    if (activeIndex < arrivals.length - 1) {
+      scrollToIndex(activeIndex + 1);
+    } else {
+      scrollToIndex(0);
+    }
   };
 
   const scrollPrev = () => {
-    if (activeIndex > 0) scrollToIndex(activeIndex - 1);
+    if (activeIndex > 0) {
+      scrollToIndex(activeIndex - 1);
+    } else {
+      scrollToIndex(arrivals.length - 1);
+    }
   };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      scrollNext();
+    }, 4000);
+    
+    return () => clearInterval(timer);
+  }, [activeIndex]);
 
   return (
     <section

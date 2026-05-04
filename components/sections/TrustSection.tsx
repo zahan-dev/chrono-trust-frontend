@@ -49,8 +49,8 @@ export const TrustSection = () => {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col justify-start h-full py-2"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-primary mb-5 uppercase tracking-wide">
-              WHY SHOP WITH US?
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-primary mb-5 tracking-wide">
+              Why Shop With Us?
             </h2>
             
             <p className="text-slate-600 font-light leading-relaxed text-sm md:text-base mb-6 max-w-xl">

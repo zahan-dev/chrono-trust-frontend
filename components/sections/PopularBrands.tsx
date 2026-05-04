@@ -8,9 +8,9 @@ const brands = [
   { name: 'Omega', logo: '/brands/omega.png' },
   { name: 'Cartier', logo: '/brands/cartier.png' },
   { name: 'Patek Philippe', logo: '/brands/patek.png' },
-  { name: 'Audemars Piguet', logo: '/brands/audemars-piguet.webp' },
+  { name: 'Audemars Piguet', logo: '/brands/audemars-piguet.png' },
   { name: 'Tag Heuer', logo: '/brands/tagheuer.png' },
-  { name: 'Breitling', logo: '/brands/breitling.jpg' },
+  { name: 'Breitling', logo: '/brands/breitling.png' },
   { name: 'Tudor', logo: '/brands/tudor.png' },
 ];
 
