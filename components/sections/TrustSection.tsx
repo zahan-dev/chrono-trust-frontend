@@ -14,7 +14,7 @@ export const TrustSection = () => {
   ];
 
   return (
-    <section className="py-16 lg:py-24 bg-[#FAFAFA] border-b border-slate-200 relative overflow-hidden" id="trust">
+    <section className="py-16 lg:py-24 bg-[#FAFAFA] border-b border-slate-200 relative overflow-hidden -mt-16 md:-mt-24 z-30 rounded-t-[3rem] md:rounded-t-[4rem] shadow-[0_-20px_50px_rgba(0,0,0,0.1)]" id="trust">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
           

@@ -25,7 +25,7 @@ export const HeroSection = () => {
   };
 
   return (
-    <section className="relative flex flex-col items-center justify-center min-h-[75vh] max-h-[80vh] md:min-h-screen pt-20 md:pt-32 pb-10 md:pb-16 overflow-hidden bg-[#1e3a5f]">
+    <section className="relative flex flex-col items-center justify-center min-h-[75vh] md:min-h-[85vh] pt-20 md:pt-32 pb-24 md:pb-36 overflow-hidden bg-[#1e3a5f]">
       
       {/* REAL WORKING BACKGROUND VIDEO */}
       <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
