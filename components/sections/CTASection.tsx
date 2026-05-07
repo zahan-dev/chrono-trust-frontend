@@ -68,7 +68,7 @@ export const CTASection = () => {
               
               <Button 
                 variant="outline" 
-                href="#contact"
+                href="/contact"
                 className="w-full sm:w-auto"
               >
                 <Calendar className="w-4 h-4 mr-2" />

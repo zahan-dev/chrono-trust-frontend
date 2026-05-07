@@ -7,9 +7,6 @@ import { ServicesSection } from '@/components/sections/ServicesSection';
 import { ProcessSection } from '@/components/sections/ProcessSection';
 import { AppointmentFAQSection } from '@/components/sections/AppointmentFAQSection';
 import { ContactTestimonialsSection } from '@/components/sections/ContactTestimonialsSection';
-import { InstagramSection } from '@/components/sections/InstagramSection';
-import { Footer } from '@/components/sections/Footer';
-import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 
 export default function Home() {
   return (
@@ -29,8 +26,6 @@ export default function Home() {
           <AppointmentFAQSection />
         </div>
       </main>
-      <Footer />
-      <FloatingWhatsApp />
     </>
   );
 }

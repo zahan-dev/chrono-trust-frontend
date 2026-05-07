@@ -26,27 +26,33 @@ const InstagramIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const LinkedinIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'About Us', href: '#about' },
-    { name: 'Listings', href: '#listings' },
+    { name: 'Home', href: '/' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Collections', href: '/collection' },
     { 
       name: 'Services', 
-      href: '#services', 
+      href: '/services', 
       subItems: [
-        { name: 'Buy Watches', href: '#services' },
-        { name: 'Sell Watches', href: '#sell' },
-        { name: 'Trade Watches', href: '#trade' }
+        { name: 'Buy Watches', href: '/services/buy' },
+        { name: 'Sell Watches', href: '/services/sell' },
+        { name: 'Trade Watches', href: '/services/trade' }
       ] 
     },
-    { name: 'Sell Watches', href: '#sell' },
-    { name: 'Trade Watches', href: '#trade' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   const whatsappNumber = '+17328329938';
@@ -108,6 +114,15 @@ export const Header = () => {
               </div>
             </div>
             <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" aria-label="Instagram">
+                  <InstagramIcon className="w-4 h-4" />
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" aria-label="LinkedIn">
+                  <LinkedinIcon className="w-4 h-4" />
+                </a>
+              </div>
+              <div className="w-px h-4 bg-white/20"></div>
               <a href="tel:+17328329938" className="flex items-center gap-2 hover:text-white transition-colors">
                 <Phone className="w-3.5 h-3.5" />
                 +1 (732) 832-9938
@@ -136,7 +151,7 @@ export const Header = () => {
 
           {/* Center: Logo */}
           <motion.a 
-            href="#" 
+            href="/" 
             className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center -mt-2 md:-mt-4"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -156,7 +171,7 @@ export const Header = () => {
             <Button 
               variant="outline" 
               size="sm" 
-              href="#sell" 
+              href="/services/sell" 
               className="border-silver/30 text-white hover:bg-silver hover:text-primary rounded-full text-xs tracking-wider uppercase px-5 py-2.5 transition-all shadow-none"
             >
               Sell Watch
@@ -287,7 +302,7 @@ export const Header = () => {
                         <a href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}`} className="w-full text-center px-8 py-4 bg-primary text-white rounded-full text-sm tracking-widest uppercase hover:bg-primary/90 transition-all flex items-center justify-center gap-2 border border-primary">
                           <MessageCircle className="w-4 h-4" /> Chat on WhatsApp
                         </a>
-                        <a href="#contact" className="w-full text-center px-8 py-4 border border-silver/30 rounded-full text-silver text-sm tracking-widest uppercase hover:bg-silver hover:text-primary transition-all">
+                        <a href="/contact" className="w-full text-center px-8 py-4 border border-silver/30 rounded-full text-silver text-sm tracking-widest uppercase hover:bg-silver hover:text-primary transition-all">
                           Book Consultation
                         </a>
                       </div>

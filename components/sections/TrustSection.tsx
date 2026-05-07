@@ -74,7 +74,7 @@ export const TrustSection = () => {
             </div>
 
             <div>
-              <Button variant="primary" href="#listings" className="rounded-full px-8 py-3.5 text-sm uppercase tracking-widest font-bold">
+              <Button variant="primary" href="/collection" className="rounded-full px-8 py-3.5 text-sm uppercase tracking-widest font-bold">
                 Get Your Watch
               </Button>
             </div>

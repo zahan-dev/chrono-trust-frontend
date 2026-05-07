@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Send } from "lucide-react";
+import { ChevronDown, Send, CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "../ui/Button";
+import { useCreateInquiry } from "@/hooks/useInquiries";
 
 export const AppointmentFAQSection = () => {
+  const createInquiry = useCreateInquiry();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,6 +17,22 @@ export const AppointmentFAQSection = () => {
     service: 'buy',
     message: ''
   });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await createInquiry.mutateAsync({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: `Service Interest: ${formData.service}\n\n${formData.message}`,
+      });
+      setIsSubmitted(true);
+      setFormData({ name: '', email: '', phone: '', message: '', service: 'buy' });
+    } catch (error) {
+      console.error("Failed to submit inquiry:", error);
+    }
+  };
 
   const faqs = [
     {
@@ -112,7 +131,29 @@ export const AppointmentFAQSection = () => {
                 GET IN TOUCH
               </h3>
               
-              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+              {isSubmitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-green-50 border border-green-100 rounded-2xl p-8 text-center flex flex-col items-center justify-center h-full min-h-[300px]"
+                >
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                    <CheckCircle className="w-8 h-8 text-green-600" />
+                  </div>
+                  <h3 className="font-serif text-2xl text-primary mb-2">Message Sent!</h3>
+                  <p className="text-slate-600 font-light mb-6">
+                    Thank you for reaching out. We&apos;ll be in touch shortly.
+                  </p>
+                  <Button
+                    onClick={() => setIsSubmitted(false)}
+                    variant="outline"
+                    className="rounded-full px-6"
+                  >
+                    Send Another Message
+                  </Button>
+                </motion.div>
+              ) : (
+                <form className="space-y-4" onSubmit={handleSubmit}>
                 <input 
                   type="text" 
                   placeholder="Name" 
@@ -160,7 +201,7 @@ export const AppointmentFAQSection = () => {
                     <input type="checkbox" required className="mt-1 border-slate-300 rounded-sm text-primary focus:ring-primary" />
                     <span className="text-slate-500 text-[10px] sm:text-xs leading-tight">
                       By checking this box, I agree to opt into receiving SMS text messages from ChronoTrust. Message and data rates may apply. Opt Out can be obtained by replying STOP.<br /><br />
-                      <a href="#" className="text-primary hover:underline">Terms & Conditions</a> | <a href="#" className="text-primary hover:underline">Privacy Policy</a>
+                      <a href="/terms" className="text-primary hover:underline">Terms & Conditions</a> | <a href="/privacy-policy" className="text-primary hover:underline">Privacy Policy</a>
                     </span>
                   </label>
                 </div>
@@ -168,11 +209,22 @@ export const AppointmentFAQSection = () => {
                 <Button 
                   variant="primary"
                   type="submit"
-                  className="w-full flex items-center justify-center py-4 rounded-full bg-primary hover:bg-primary/90 text-white font-bold uppercase tracking-widest text-sm shadow-md"
+                  disabled={createInquiry.isPending}
+                  className="w-full flex items-center justify-center gap-2 py-4 rounded-full bg-primary hover:bg-primary/90 text-white font-bold uppercase tracking-widest text-sm shadow-md disabled:opacity-70"
                 >
-                  Submit
+                  {createInquiry.isPending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Submit
+                    </>
+                  )}
                 </Button>
               </form>
+              )}
             </div>
           </motion.div>
 

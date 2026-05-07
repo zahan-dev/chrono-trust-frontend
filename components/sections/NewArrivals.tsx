@@ -291,7 +291,7 @@ export const NewArrivals = () => {
           transition={{ duration: 0.6 }}
           className="flex justify-center mt-14"
         >
-          <Button variant="outline" href="#listings" className="gap-3">
+          <Button variant="outline" href="/collection" className="gap-3">
             View Full Collection <ArrowRight className="w-4 h-4" />
           </Button>
         </motion.div>

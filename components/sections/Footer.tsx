@@ -62,22 +62,22 @@ export const Footer = () => {
             <h3 className="text-xs font-semibold text-white/90 uppercase tracking-[0.2em] mb-8">Navigation</h3>
             <ul className="space-y-4 text-sm font-light">
               <li>
-                <a href="#home" className="text-white/60 hover:text-white transition-colors inline-flex items-center gap-2 group">
+                <a href="/" className="text-white/60 hover:text-white transition-colors inline-flex items-center gap-2 group">
                   Home <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
                 </a>
               </li>
               <li>
-                <a href="#about" className="text-white/60 hover:text-white transition-colors inline-flex items-center gap-2 group">
+                <a href="/about" className="text-white/60 hover:text-white transition-colors inline-flex items-center gap-2 group">
                   About Us <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
                 </a>
               </li>
               <li>
-                <a href="#listings" className="text-white/60 hover:text-white transition-colors inline-flex items-center gap-2 group">
+                <a href="/collection" className="text-white/60 hover:text-white transition-colors inline-flex items-center gap-2 group">
                   Collection <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
                 </a>
               </li>
               <li>
-                <a href="#services" className="text-white/60 hover:text-white transition-colors inline-flex items-center gap-2 group">
+                <a href="/services" className="text-white/60 hover:text-white transition-colors inline-flex items-center gap-2 group">
                   Services <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
                 </a>
               </li>
@@ -89,22 +89,22 @@ export const Footer = () => {
             <h3 className="text-xs font-semibold text-white/90 uppercase tracking-[0.2em] mb-8">Expertise</h3>
             <ul className="space-y-4 text-sm font-light">
               <li>
-                <a href="#buy" className="text-white/50 hover:text-white transition-colors inline-flex items-center gap-2 group">
+                <a href="/services/buy" className="text-white/50 hover:text-white transition-colors inline-flex items-center gap-2 group">
                   Buy Watches <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
                 </a>
               </li>
               <li>
-                <a href="#sell" className="text-white/50 hover:text-white transition-colors inline-flex items-center gap-2 group">
+                <a href="/services/sell" className="text-white/50 hover:text-white transition-colors inline-flex items-center gap-2 group">
                   Sell Watches <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
                 </a>
               </li>
               <li>
-                <a href="#trade" className="text-white/50 hover:text-white transition-colors inline-flex items-center gap-2 group">
+                <a href="/services/trade" className="text-white/50 hover:text-white transition-colors inline-flex items-center gap-2 group">
                   Trade Watches <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
                 </a>
               </li>
               <li>
-                <a href="#consignment" className="text-white/50 hover:text-white transition-colors inline-flex items-center gap-2 group">
+                <a href="/services/consignment" className="text-white/50 hover:text-white transition-colors inline-flex items-center gap-2 group">
                   Consignment <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
                 </a>
               </li>
@@ -153,8 +153,8 @@ export const Footer = () => {
             &copy; {new Date().getFullYear()} ChronoTrust. All Rights Reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="/terms" className="hover:text-white transition-colors">Terms of Service</a>
           </div>
         </div>
       </div>

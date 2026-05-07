@@ -10,25 +10,25 @@ export const ServicesSection = () => {
       icon: Watch,
       title: 'Acquire',
       description: 'Discover rare, unworn, and highly sought-after timepieces sourced directly from our global network of private collectors.',
-      link: '#buy'
+      link: '/collection'
     },
     {
       icon: Wallet,
       title: 'Sell',
       description: 'Receive an immediate, highly competitive offer for your luxury watch with immediate same-day bank transfers.',
-      link: '#sell'
+      link: '/services/sell'
     },
     {
       icon: RefreshCw,
       title: 'Trade',
       description: 'Upgrade your collection by trading in your current timepiece towards any watch in our exclusive inventory.',
-      link: '#trade'
+      link: '/services/trade'
     },
     {
       icon: BadgeCheck,
       title: 'Valuation',
       description: 'Get a complimentary, data-driven market appraisal of your timepiece from our certified horological experts.',
-      link: '#contact'
+      link: '/contact'
     }
   ];
 
@@ -82,7 +82,7 @@ export const ServicesSection = () => {
           >
             <Button 
               variant="secondary" 
-              href="#contact" 
+              href="/contact" 
               className="gap-3"
             >
               Book a Consultation <ArrowRight className="w-4 h-4" />

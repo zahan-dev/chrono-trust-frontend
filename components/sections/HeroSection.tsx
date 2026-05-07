@@ -87,7 +87,7 @@ export const HeroSection = () => {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
               <Button 
                 variant="outline" 
-                href="#services"
+                href="/services"
                 className="w-full text-white"
               >
                 Explore Services
@@ -97,7 +97,7 @@ export const HeroSection = () => {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
               <Button 
                 variant="outline" 
-                href="#contact"
+                href="/contact"
                 className="w-full text-white"
               >
                 Book Consultation
