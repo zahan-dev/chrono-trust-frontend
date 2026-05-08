@@ -29,13 +29,13 @@ export const PopularBrands = () => {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="text-[10px] font-bold tracking-[0.4em] text-silver uppercase mb-3 lg:mb-4 block">
-              Trusted Names
+              Trusted Names in Luxury Horology
             </span>
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-medium text-primary tracking-tight mb-4 lg:mb-6">
-              Popular Luxury Brands
+              Popular Luxury Watch Brands
             </h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-sm md:text-base tracking-wide leading-relaxed hidden sm:block">
-              Explore iconic timepieces from the world&apos;s most respected watchmakers.
+            <p className="text-slate-500 max-w-4xl mx-auto text-sm md:text-base tracking-wide leading-relaxed hidden sm:block">
+              Explore iconic timepieces from the world’s most respected watchmakers. At ChronoTrust, we feature pre-owned and authenticated watches from renowned brands, including Rolex, Omega, Tudor, Cartier, Patek Philippe, Audemars Piguet, and more. Each watch is carefully selected to ensure quality, authenticity, and timeless value, making your collection truly exceptional.
             </p>
           </motion.div>
         </div>
@@ -67,9 +67,9 @@ export const PopularBrands = () => {
                 {/* Brand Image Logo */}
                 <div className="relative w-full h-12 md:h-16 flex items-center justify-center filter grayscale opacity-50 group-hover/item:grayscale-0 group-hover/item:opacity-100 transition-all duration-500 transform group-hover/item:scale-110">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img 
-                    src={brand.logo} 
-                    alt={`${brand.name} logo`} 
+                  <img
+                    src={brand.logo}
+                    alt={`${brand.name} logo`}
                     className="max-w-20 md:max-w-28 max-h-full object-contain"
                   />
                 </div>

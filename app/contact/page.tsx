@@ -72,19 +72,19 @@ export default function ContactPage() {
   };
 
   const itemVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 20,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.1, 0.25, 1],
+    hidden: {
+      opacity: 0,
+      y: 20,
     },
-  },
-};
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.1, 0.25, 1],
+      },
+    },
+  };
 
   return (
     <>
@@ -117,11 +117,11 @@ export default function ContactPage() {
                 </span>
                 <div className="h-px w-8 bg-silver"></div>
               </motion.div>
-              <motion.h1 variants={itemVariants} className="font-serif text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight mb-8 text-white leading-[1.1]">
-                Contact Us
+              <motion.h1 variants={itemVariants} className="font-serif text-3xl md:text-4xl lg:text-6xl font-medium tracking-tight mb-8 text-white leading-[1.1]">
+                Contact ChronoTrust Luxury Watch, Experts
               </motion.h1>
-              <motion.p variants={itemVariants} className="text-lg md:text-xl text-white/70 font-light leading-relaxed max-w-2xl mx-auto">
-                We&apos;re here to assist you with any questions about buying, selling, or trading luxury timepieces.
+              <motion.p variants={itemVariants} className="text-lg md:text-xl text-white/70 font-light leading-relaxed max-w-4xl mx-auto">
+                We’re here to assist you with any questions about buying, selling, or trading luxury watches. Our expert team ensures that every inquiry is handled with personalized guidance, transparency, and complete confidentiality. Reach out today to start your seamless horological experience.
               </motion.p>
             </motion.div>
           </div>
@@ -164,7 +164,7 @@ export default function ContactPage() {
         <section className="py-24 lg:py-32">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div className="grid lg:grid-cols-12 gap-16 lg:gap-12 items-start">
-              
+
               {/* Info Side */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -178,7 +178,7 @@ export default function ContactPage() {
                     SEND A MESSAGE
                   </h2>
                   <p className="text-slate-600 font-light text-base md:text-lg leading-relaxed max-w-2xl">
-                    Fill out the form below and our dedicated horology experts will get back to you within 24 hours. For immediate assistance, reach out directly on WhatsApp.
+                    Fill out the form below, and our dedicated luxury watch experts will respond within 24 hours. For immediate assistance, connect with us directly via WhatsApp for personalized guidance on buying, selling, or trading authenticated timepieces.
                   </p>
                 </div>
 
@@ -343,9 +343,9 @@ export default function ContactPage() {
                           )}
                         </Button>
                       </div>
-                      
+
                       <p className="text-center text-[10px] text-slate-400 font-medium">
-                        Your information is secure and will never be shared. <br className="hidden sm:block"/>
+                        Your information is secure and will never be shared. <br className="hidden sm:block" />
                         By submitting, you agree to our Terms & Privacy Policy.
                       </p>
                     </form>

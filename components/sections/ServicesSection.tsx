@@ -3,31 +3,32 @@
 import { Watch, ArrowRight, Wallet, RefreshCw, BadgeCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
+import Link from 'next/link';
 
 export const ServicesSection = () => {
   const services = [
     {
       icon: Watch,
       title: 'Acquire',
-      description: 'Discover rare, unworn, and highly sought-after timepieces sourced directly from our global network of private collectors.',
+      description: 'Discover rare, unworn, and highly sought-after luxury timepieces sourced from our global network of trusted collectors. Each piece is carefully verified for authenticity and quality.',
       link: '/collection'
     },
     {
       icon: Wallet,
       title: 'Sell',
-      description: 'Receive an immediate, highly competitive offer for your luxury watch with immediate same-day bank transfers.',
+      description: 'Receive an immediate, competitive offer for your pre-owned luxury watch, with secure same-day bank transfers and hassle-free handling.',
       link: '/services/sell'
     },
     {
       icon: RefreshCw,
       title: 'Trade',
-      description: 'Upgrade your collection by trading in your current timepiece towards any watch in our exclusive inventory.',
+      description: 'Upgrade your collection by trading in your current watch for any timepiece in our exclusive inventory, ensuring value and authenticity.',
       link: '/services/trade'
     },
     {
       icon: BadgeCheck,
       title: 'Valuation',
-      description: 'Get a complimentary, data-driven market appraisal of your timepiece from our certified horological experts.',
+      description: 'Get a complimentary, data-driven market appraisal from our certified horological experts to understand the true value of your timepiece.',
       link: '/contact'
     }
   ];
@@ -120,11 +121,10 @@ export const ServicesSection = () => {
                 <p className="text-slate-500 font-light leading-relaxed mb-8 grow">
                   {service.description}
                 </p>
-                
-                <div className="mt-auto flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-silver group-hover:text-primary transition-colors duration-300">
+                <Link href={service.link} className="mt-auto flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-silver group-hover:text-primary transition-colors duration-300">
                   Learn More 
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                </div>
+                </Link>
               </motion.div>
             );
           })}

@@ -16,22 +16,22 @@ const values = [
   {
     icon: ShieldCheck,
     title: "Trust & Transparency",
-    description: "Every transaction is built on complete transparency. We provide detailed condition reports and authentication certificates.",
+    description: "Every transaction is built on complete transparency. We provide detailed condition reports and authentication certificates, ensuring clients have full confidence in every purchase, sale, or trade.",
   },
   {
     icon: Diamond,
     title: "Expert Authentication",
-    description: "Our master watchmakers with decades of experience authenticate every timepiece that passes through our doors.",
+    description: "Our master watchmakers, with decades of experience, authenticate every timepiece that passes through our doors. Each watch meets the highest standards of authenticity, precision, and quality.",
   },
   {
     icon: Users,
     title: "Family Legacy",
-    description: "A family-owned business passed down through generations, treating every client like part of our extended family.",
+    description: "As a family-owned business, our values have been passed through generations. We treat every client as part of our extended family, delivering personalized service and trusted guidance.",
   },
   {
     icon: Clock,
     title: "Timeless Service",
-    description: "From sourcing rare pieces to after-sales support, we're with you for the lifetime of your timepiece.",
+    description: "From sourcing rare pieces to providing after-sales support, we are committed to your long-term satisfaction, making every transaction seamless and worry-free.",
   },
 ];
 
@@ -42,19 +42,19 @@ export default function AboutPage() {
   };
 
   const itemVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 20,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.25, 0.1, 0.25, 1],
+    hidden: {
+      opacity: 0,
+      y: 20,
     },
-  },
-};
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.1, 0.25, 1],
+      },
+    },
+  };
 
   return (
     <>
@@ -87,10 +87,10 @@ export default function AboutPage() {
                 </span>
               </motion.div>
               <motion.h1 variants={itemVariants} className="font-serif text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight mb-8 text-white leading-[1.1]">
-                A Legacy Built <br className="hidden md:block" /> on Trust
+                A Legacy Built <br className="hidden md:block" /> on Trust and Expertise
               </motion.h1>
               <motion.p variants={itemVariants} className="text-lg md:text-xl text-white/70 font-light leading-relaxed max-w-2xl">
-                For over 15 years, we have been the trusted destination for discerning collectors seeking the world&apos;s finest timepieces. Our commitment to authenticity and exceptional service defines everything we do.
+                For over 15 years, ChronoTrust has been the trusted destination for discerning luxury watch collectors worldwide. Our dedication to authenticity, meticulous verification, and exceptional service ensures every timepiece meets the highest standards. Whether you are buying, selling, or trading, our expert team guides you through a seamless, secure, and transparent experience.
               </motion.p>
             </motion.div>
           </div>
@@ -118,10 +118,10 @@ export default function AboutPage() {
                 </h2>
                 <div className="space-y-6 text-slate-600 font-light leading-relaxed text-lg">
                   <p>
-                    Founded in 2009, ChronoTrust began as a small family passion project in New York City. What started as a father and son&apos;s shared love for horology has grown into one of the most respected names in luxury watch dealing.
+                    Founded in 2009, ChronoTrust started as a family passion project in New York City, driven by a father and son's shared love for horology. Over the years, it has grown into a trusted name in luxury watch dealing, known for exceptional expertise and personalized service.
                   </p>
                   <p>
-                    Our journey has taken us from humble beginnings to becoming trusted partners for collectors worldwide. Through it all, our core values remain unchanged: authenticity, transparency, and treating every client like family.
+                    From humble beginnings to serving collectors worldwide, our journey is defined by core values of authenticity, transparency, and treating every client like family. With over 15 years of excellence, we continue to combine passion, precision, and professionalism in every transaction.
                   </p>
                 </div>
               </motion.div>
@@ -145,7 +145,7 @@ export default function AboutPage() {
                 {/* Floating Badge */}
                 <div className="absolute -bottom-10 -left-6 md:-left-10 bg-white p-8 rounded-4xl shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-slate-100 backdrop-blur-xl flex flex-col items-center justify-center">
                   <p className="font-serif text-5xl text-primary mb-2">15+</p>
-                  <p className="text-xs tracking-widest uppercase text-slate-500 font-medium text-center">Years of<br/>Excellence</p>
+                  <p className="text-xs tracking-widest uppercase text-slate-500 font-medium text-center">Years of<br />Excellence</p>
                 </div>
               </motion.div>
             </div>
@@ -155,7 +155,7 @@ export default function AboutPage() {
         {/* Premium Stats Section */}
         <section className="py-24 bg-primary text-white relative overflow-hidden">
           <div className="absolute inset-0 z-0">
-            <Image 
+            <Image
               src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=2000&q=80"
               alt="Luxury Watch Movement"
               fill
@@ -232,8 +232,8 @@ export default function AboutPage() {
         {/* CTA Section */}
         <section className="py-24 lg:py-32 bg-primary text-white relative overflow-hidden">
           <div className="absolute inset-0 z-0">
-             <div className="absolute inset-0 bg-radial-gradient from-primary/80 via-primary to-primary z-10" />
-             <div className="absolute inset-0 pointer-events-none opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
+            <div className="absolute inset-0 bg-radial-gradient from-primary/80 via-primary to-primary z-10" />
+            <div className="absolute inset-0 pointer-events-none opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
           </div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center relative z-10">
             <motion.div
@@ -244,11 +244,10 @@ export default function AboutPage() {
               className="max-w-3xl mx-auto"
             >
               <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl mb-6 leading-[1.1]">
-                Begin Your Journey
+                Begin Your Luxury Watch Journey
               </h2>
-              <p className="text-white/70 font-light max-w-xl mx-auto mb-10 text-lg">
-                Whether you&apos;re buying, selling, or trading, our team is ready to 
-                provide the exceptional service you deserve.
+              <p className="text-white/70 font-light max-w-4xl mx-auto mb-10 text-lg">
+                Whether you're buying, selling, or trading, our expert team is ready to provide personalized guidance, secure transactions, and exceptional service. Trust ChronoTrust to make your horological experience seamless and rewarding.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button

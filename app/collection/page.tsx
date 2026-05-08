@@ -67,7 +67,7 @@ export default function CollectionPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/50 to-transparent" />
         </div>
-        
+
         <div className="relative z-10 container mx-auto px-4 text-center mt-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -77,12 +77,12 @@ export default function CollectionPage() {
             <p className="text-white/60 text-xs tracking-[0.4em] uppercase font-semibold mb-6">
               Curated Excellence
             </p>
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-white font-medium tracking-tight mb-6 drop-shadow-sm">
-              The Collection
+            <h1 className="font-serif text-5xl md:text-6xl text-white font-medium tracking-tight mb-6 drop-shadow-sm">
+              Explore Our Curated Luxury Timepieces
             </h1>
             <div className="w-16 h-[1px] bg-white/30 mx-auto mb-6" />
-            <p className="text-white/80 font-light max-w-xl mx-auto text-lg">
-              Discover our handpicked selection of the world's most prestigious timepieces.
+            <p className="text-white/80 font-light max-w-4xl mx-auto text-lg">
+              Experience a handpicked selection of the world’s most prestigious watches, chosen for their rarity, craftsmanship, and timeless elegance. Each piece in our collection is verified for authenticity and comes with expert-backed guidance to ensure a secure and confident acquisition.
             </p>
           </motion.div>
         </div>
@@ -142,22 +142,20 @@ export default function CollectionPage() {
               <div className="flex items-center bg-slate-100/80 rounded-full p-1 ml-auto md:ml-4 flex-shrink-0">
                 <button
                   onClick={() => setViewMode("grid")}
-                  className={`p-2 rounded-full transition-all duration-300 ${
-                    viewMode === "grid"
+                  className={`p-2 rounded-full transition-all duration-300 ${viewMode === "grid"
                       ? "bg-white text-primary shadow-sm"
                       : "text-slate-400 hover:text-primary"
-                  }`}
+                    }`}
                   aria-label="Grid View"
                 >
                   <LayoutGrid className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setViewMode("compact")}
-                  className={`p-2 rounded-full transition-all duration-300 ${
-                    viewMode === "compact"
+                  className={`p-2 rounded-full transition-all duration-300 ${viewMode === "compact"
                       ? "bg-white text-primary shadow-sm"
                       : "text-slate-400 hover:text-primary"
-                  }`}
+                    }`}
                   aria-label="Compact View"
                 >
                   <Grid3X3 className="w-4 h-4" />
@@ -176,9 +174,8 @@ export default function CollectionPage() {
                   setCategorySlug("");
                   setPage(1);
                 }}
-                className={`flex-shrink-0 text-sm font-medium transition-all relative pb-1 ${
-                  !categorySlug ? "text-primary" : "text-slate-500 hover:text-primary"
-                }`}
+                className={`flex-shrink-0 text-sm font-medium transition-all relative pb-1 ${!categorySlug ? "text-primary" : "text-slate-500 hover:text-primary"
+                  }`}
               >
                 All Brands
                 {!categorySlug && (
@@ -192,9 +189,8 @@ export default function CollectionPage() {
                     setCategorySlug(cat.slug);
                     setPage(1);
                   }}
-                  className={`flex-shrink-0 text-sm font-medium transition-all relative pb-1 flex items-center gap-1.5 ${
-                    categorySlug === cat.slug ? "text-primary" : "text-slate-500 hover:text-primary"
-                  }`}
+                  className={`flex-shrink-0 text-sm font-medium transition-all relative pb-1 flex items-center gap-1.5 ${categorySlug === cat.slug ? "text-primary" : "text-slate-500 hover:text-primary"
+                    }`}
                 >
                   {cat.name}
                   <span className="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded-full text-slate-500">
@@ -213,7 +209,7 @@ export default function CollectionPage() {
       {/* Main Content */}
       <section className="flex-1 py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          
+
           {/* Active Filters Info */}
           {hasFilters && (
             <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200/50">
@@ -257,7 +253,7 @@ export default function CollectionPage() {
           {isLoading ? (
             <PageSkeleton />
           ) : data?.data?.length === 0 ? (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               className="text-center py-32 bg-white rounded-2xl border border-slate-100 shadow-sm"
@@ -278,11 +274,10 @@ export default function CollectionPage() {
             </motion.div>
           ) : (
             <div
-              className={`grid gap-x-6 gap-y-10 ${
-                viewMode === "grid"
+              className={`grid gap-x-6 gap-y-10 ${viewMode === "grid"
                   ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
                   : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-              }`}
+                }`}
             >
               {data?.data?.map((product, index) => (
                 <motion.div
@@ -323,11 +318,10 @@ export default function CollectionPage() {
                         setPage(p);
                         window.scrollTo({ top: 400, behavior: 'smooth' });
                       }}
-                      className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-medium transition-all ${
-                        page === p
+                      className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-medium transition-all ${page === p
                           ? "bg-primary text-white shadow-md shadow-primary/20"
                           : "text-slate-600 hover:bg-slate-100"
-                      }`}
+                        }`}
                     >
                       {p}
                     </button>
@@ -348,9 +342,10 @@ export default function CollectionPage() {
           )}
         </div>
       </section>
-      
+
       {/* Global hide scrollbar styles since we used it */}
-      <style dangerouslySetInnerHTML={{__html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }

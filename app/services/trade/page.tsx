@@ -10,57 +10,57 @@ const steps = [
   {
     number: "01",
     title: "Share Your Watch",
-    description: "Submit details and photos of your current timepiece for evaluation.",
+    description: "Submit your authenticated luxury watch details and high-quality photos via our secure form or WhatsApp. This ensures a fast and accurate assessment for your trade.",
     icon: Search,
   },
   {
     number: "02",
     title: "Choose Your Upgrade",
-    description: "Browse our collection or let us suggest pieces matching your preferences.",
+    description: "Browse our curated collection of luxury watches or let our certified experts suggest pieces tailored to your preferences and collection goals.",
     icon: Search,
   },
   {
     number: "03",
     title: "Fair Valuation",
-    description: "We provide transparent valuations for both your watch and the upgrade.",
+    description: "Receive a transparent, data-driven valuation for both your current watch and the selected upgrade, ensuring you get optimal value.",
     icon: Scale,
   },
   {
     number: "04",
     title: "Seamless Exchange",
-    description: "Complete the trade with secure shipping and authentication.",
+    description: "Complete the trade through secure shipping, verified authentication, and professional handling, guaranteeing a smooth and trustworthy transaction.",
     icon: FileCheck,
   },
 ];
 
 const benefits = [
-  "Fair trade-in values based on market rates",
-  "Wide selection of upgrade options",
-  "No sales tax on trades (where applicable)",
-  "Simplified single transaction",
-  "Expert guidance throughout",
-  "Secure, insured shipping both ways",
+  "Fair Trade-in Values: Receive transparent valuations based on current market rates.",
+  "Wide Upgrade Selection: Access a curated collection of premium watches for your trade",
+  "No Sales Tax on Trades: Where applicable, enjoy tax-free transactions for better overall value.",
+  "Simplified Single Transaction: Combine selling and buying into one seamless process.",
+  "Expert Guidance Throughout: Certified watch experts assist at every step of the trade.",
+  "Secure, Insured Shipping Both Ways: Your watches are protected during transit with insured shipping.",
 ];
 
 const scenarios = [
   {
     title: "Trade Up",
-    description: "Move from a mid-tier piece to a grail watch you've been dreaming of.",
+    description: "Upgrade from a mid-tier or pre-owned watch to a high-value luxury timepiece that completes your collection. Achieve your dream watch with expert guidance and transparent valuations.",
     example: "Omega Speedmaster → Rolex Daytona",
   },
   {
     title: "Diversify",
-    description: "Exchange one high-value piece for multiple watches across brands.",
+    description: "Exchange a single high-value watch for multiple watches across brands, expanding your collection while maintaining optimal market value.",
     example: "Single Patek → Rolex + AP + JLC",
   },
   {
     title: "Refresh",
-    description: "Swap an older model for the latest version or different style.",
+    description: "Swap your older or previous generation model for the latest version or a different style, ensuring your collection stays modern and aligned with your preferences.",
     example: "Previous Gen → Current Model",
   },
   {
     title: "Downsize",
-    description: "Trade multiple watches for one exceptional piece.",
+    description: "Trade multiple watches for one exceptional timepiece, allowing you to consolidate value while acquiring a rare or vintage watch that enhances your collection.",
     example: "3 Watches → 1 Rare Vintage",
   },
 ];
@@ -94,12 +94,10 @@ export default function TradePage() {
                 <span>Trade</span>
               </div>
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-6">
-                Trade Your Timepiece
+                Trade Your Luxury Timepiece with Ease
               </h1>
               <p className="text-lg text-white/80 font-light leading-relaxed max-w-2xl mb-8">
-                Upgrade your collection seamlessly. Trade in your current watch 
-                toward a new acquisition and simplify your journey to the 
-                perfect timepiece.
+                Upgrade your collection seamlessly with ChronoTrust. Trade your authenticated luxury watch for a new acquisition, guided by our certified experts. Experience a secure, transparent, and streamlined process that ensures you receive fair value and expert guidance every step of the way.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
@@ -201,7 +199,7 @@ export default function TradePage() {
                 Trading Scenarios
               </p>
               <h2 className="font-serif text-3xl md:text-4xl text-primary">
-                Ways to Trade
+                Ways to Trade Your Luxury Watch
               </h2>
             </div>
 
@@ -236,7 +234,7 @@ export default function TradePage() {
               >
                 <div className="relative aspect-square rounded-2xl overflow-hidden">
                   <Image
-                    src="https://images.unsplash.com/photo-1619169778885-64c62f5f2e1e?w=800&q=80"
+                    src="/IWC 1.webp"
                     alt="Watch collection"
                     fill
                     className="object-cover"
@@ -254,11 +252,10 @@ export default function TradePage() {
                   Why Trade With Us
                 </p>
                 <h2 className="font-serif text-3xl md:text-4xl text-primary mb-6">
-                  Benefits of Trading
+                  Benefits of Trading Your Luxury Watch
                 </h2>
                 <p className="text-slate-600 font-light leading-relaxed mb-8">
-                  Trading offers advantages over selling and buying separately. 
-                  Enjoy a streamlined process with better overall value and less hassle.
+                  Trading your authenticated luxury watch with ChronoTrust offers distinct advantages over selling and buying separately. Experience a streamlined process, enhanced value, and expert guidance, all designed to make your watch upgrade smooth, secure, and rewarding.
                 </p>
 
                 <ul className="space-y-4">
@@ -284,11 +281,10 @@ export default function TradePage() {
               transition={{ duration: 0.8 }}
             >
               <h2 className="font-serif text-3xl md:text-4xl mb-4">
-                Ready to Upgrade?
+                Ready to Upgrade Your Timepiece?
               </h2>
               <p className="text-white/70 font-light max-w-xl mx-auto mb-8">
-                Contact our team to discuss your trade options and discover the 
-                perfect path to your next timepiece.
+                Take the next step in enhancing your luxury watch collection. Our experts are ready to provide personalized guidance, fair valuations, and seamless trade solutions to help you acquire the perfect timepiece with confidence.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button

@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 
 export const ProcessSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end center"]
@@ -17,20 +17,20 @@ export const ProcessSection = () => {
     {
       number: '01',
       title: 'Initial Consultation',
-      description: 'Connect with our experts to discuss your specific requirements. Whether buying, selling, or trading, we ensure absolute confidentiality.',
+      description: 'Connect with our experts to discuss your unique requirements. Whether buying, selling, or trading, we maintain absolute confidentiality and personalized guidance.',
     },
     {
       number: '02',
       title: 'Expert Evaluation',
-      description: 'Our master watchmakers and market analysts authenticate and evaluate your timepiece, providing a transparent and competitive assessment.',
+      description: 'Our master watchmakers and market analysts authenticate and evaluate your timepiece, providing a transparent, data-driven, and competitive assessment.',
     },
     {
       number: '03',
       title: 'Secure Transaction',
-      description: 'Finalize the deal through our secure banking channels or in-person at our private showroom, ensuring peace of mind every step of the way.',
+      description: 'Finalize your deal via our secure banking channels or in-person at our private showroom, ensuring safe, hassle-free, and insured transactions every step of the way.',
     },
   ];
-  
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -52,11 +52,11 @@ export const ProcessSection = () => {
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.02]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-        
+
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
-          
+
           {/* Left Side: Title */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -69,16 +69,16 @@ export const ProcessSection = () => {
                 How It Works
               </span>
             </motion.div>
-            <motion.h2 variants={itemVariants} className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium text-[#050B14] tracking-tight leading-[1.1] mb-6">
-              A Seamless <br/> Experience
+            <motion.h2 variants={itemVariants} className="text-4xl md:text-5xl font-serif font-medium text-[#050B14] tracking-tight leading-[1.1] mb-6">
+              A Seamless Experience in Buying, Selling & Trading Luxury Watches
             </motion.h2>
             <motion.p variants={itemVariants} className="text-slate-500 text-lg leading-relaxed font-light">
-              We have refined the process of acquiring and selling luxury timepieces into a secure, effortless journey tailored to the most discerning collectors.
+              We’ve refined the process of acquiring, selling, and trading luxury watches into a secure and effortless journey. Tailored for collectors and enthusiasts, every step ensures authenticity, transparency, and peace of mind.
             </motion.p>
           </motion.div>
-          
+
           {/* Right Side: Timeline */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -87,16 +87,16 @@ export const ProcessSection = () => {
           >
             {/* Background Line */}
             <div className="absolute left-6.75 md:left-9.75 top-4 bottom-4 w-0.5 bg-slate-100" />
-            
+
             {/* Animated Glowing Progress Line */}
-            <motion.div 
-              className="absolute left-6.75 md:left-9.75 top-4 w-0.5 bg-primary origin-top shadow-[0_0_10px_rgba(30,58,95,0.5)]" 
+            <motion.div
+              className="absolute left-6.75 md:left-9.75 top-4 w-0.5 bg-primary origin-top shadow-[0_0_10px_rgba(30,58,95,0.5)]"
               style={{ height: lineHeight }}
             />
-            
+
             {steps.map((step, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 variants={itemVariants}
                 className="relative flex gap-6 md:gap-10 group"
               >
@@ -108,7 +108,7 @@ export const ProcessSection = () => {
                     </span>
                   </div>
                 </div>
-                
+
                 {/* Content */}
                 <div className="pt-3 md:pt-5 pb-8 border-b border-slate-100 group-last:border-none w-full">
                   <h3 className="text-2xl md:text-3xl font-serif font-medium text-primary mb-4 group-hover:text-primary/80 transition-colors duration-300">
@@ -118,7 +118,7 @@ export const ProcessSection = () => {
                     {step.description}
                   </p>
                 </div>
-                
+
               </motion.div>
             ))}
           </motion.div>

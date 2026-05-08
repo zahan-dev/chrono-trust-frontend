@@ -11,7 +11,7 @@ const services = [
     id: "buy",
     title: "Buy Watches",
     subtitle: "Acquire Timeless Pieces",
-    description: "Discover our curated collection of authenticated luxury timepieces. From vintage classics to modern masterpieces, find the perfect addition to your collection.",
+    description: "Discover our curated collection of authenticated luxury watches. From vintage classics to modern masterpieces, ChronoTrust ensures every timepiece is verified for authenticity, quality, and provenance. Add the perfect addition to your collection with confidence and expert guidance.",
     icon: ShoppingBag,
     image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=800&q=80",
     features: ["100% Authenticity Guarantee", "Global Sourcing Network", "Competitive Pricing", "Lifetime Support"],
@@ -22,7 +22,7 @@ const services = [
     id: "sell",
     title: "Sell Watches",
     subtitle: "Maximize Your Return",
-    description: "Sell your timepiece with confidence. Our experts provide fair market valuations and connect you with serious buyers worldwide for the best possible price.",
+    description: "Sell your timepiece with confidence. Our experts provide fair market valuations and connect you with serious buyers worldwide, ensuring you get the best possible price for your watch.",
     icon: Tag,
     image: "https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=800&q=80",
     features: ["Free Professional Appraisal", "Global Buyer Network", "Secure Transaction", "Quick Payment"],
@@ -33,7 +33,7 @@ const services = [
     id: "trade",
     title: "Trade Watches",
     subtitle: "Upgrade Your Collection",
-    description: "Trade up to your dream timepiece. We offer competitive trade-in values and seamless transitions, making it easy to evolve your collection.",
+    description: "Upgrade to your dream timepiece. ChronoTrust offers competitive trade-in values and seamless transactions, making it easy to enhance and diversify your collection.",
     icon: Repeat,
     image: "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=800&q=80",
     features: ["Fair Trade-In Values", "Seamless Transition", "Collection Matching", "Expert Guidance"],
@@ -46,17 +46,17 @@ const guarantees = [
   {
     icon: Shield,
     title: "Authenticity Guaranteed",
-    description: "Every timepiece is verified by our master watchmakers",
+    description: "Every luxury watch is thoroughly verified by our master watchmakers, ensuring 100% genuine, authenticated, and high-quality timepieces for every client.",
   },
   {
     icon: Clock,
     title: "Swift Process",
-    description: "Efficient transactions with clear timelines",
+    description: "We provide efficient transactions with clear timelines, making buying, selling, or trading your watch fast, seamless, and hassle-free.",
   },
   {
     icon: Award,
     title: "Expert Guidance",
-    description: "Personal consultation throughout your journey",
+    description: "Enjoy personal consultation and expert guidance throughout your horological journey, from valuation to acquisition and trade.",
   },
 ];
 
@@ -87,9 +87,8 @@ export default function ServicesPage() {
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-6">
                 Premium Watch Services
               </h1>
-              <p className="text-lg text-white/80 font-light leading-relaxed">
-                Whether you&apos;re acquiring, selling, or trading, our team of experts 
-                provides unparalleled service for discerning collectors.
+              <p className="text-lg max-w-3xl text-white/80 font-light leading-relaxed">
+                Whether you're acquiring, selling, or trading luxury watches, our expert team provides unmatched guidance, secure transactions, and personalized service for discerning collectors. Trust ChronoTrust for a seamless, reliable, and expert-led horological experience.
               </p>
             </motion.div>
           </div>
@@ -106,9 +105,8 @@ export default function ServicesPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className={`grid lg:grid-cols-2 gap-12 items-center ${
-                    index % 2 === 1 ? "lg:flex-row-reverse" : ""
-                  }`}
+                  className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? "lg:flex-row-reverse" : ""
+                    }`}
                 >
                   {/* Image */}
                   <div className={`relative ${index % 2 === 1 ? "lg:order-2" : ""}`}>
@@ -196,11 +194,10 @@ export default function ServicesPage() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="font-serif text-3xl md:text-4xl mb-4">
-                  Ready to Begin?
+                  Ready to Begin Your Luxury Watch Journey?
                 </h2>
                 <p className="text-white/70 font-light leading-relaxed">
-                  Our team of experts is standing by to assist you. Whether you have 
-                  questions about buying, selling, or trading, we&apos;re here to help.
+                  Our team of expert horologists is standing by to assist you. Whether you have questions about buying, selling, or trading authenticated luxury watches, we provide personalized guidance, secure transactions, and seamless support every step of the way.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row items-center justify-end gap-4">

@@ -7,17 +7,17 @@ const testimonials = [
   {
     name: 'Michael R.',
     role: 'Watch Collector',
-    review: 'The sourcing process was flawless. They found the exact Daytona I was looking for within weeks. Highly recommended for serious collectors.',
+    review: 'The sourcing process was seamless and flawless. ChronoTrust found the exact Daytona watch I was searching for in just weeks. Highly recommended for serious luxury watch collectors.',
   },
   {
     name: 'James H.',
     role: 'First-time Buyer',
-    review: 'Incredible experience from start to finish. The team took the time to explain the history of the watch and made me feel completely at ease.',
+    review: 'An exceptional experience from start to finish. The team explained the history and value of my watch, making me feel completely confident and at ease.',
   },
   {
     name: 'David L.',
     role: 'Private Client',
-    review: 'Traded in two pieces for a rare Patek. The valuation was extremely fair, and the transaction was secure and discreet.',
+    review: 'Traded in two watches for a rare Patek Philippe. The valuation was fair, and the entire transaction was secure, discreet, and fully insured.',
   },
 ];
 
@@ -25,7 +25,7 @@ export const ContactTestimonialsSection = () => {
   return (
     <section className="py-16 bg-white border-b border-slate-200 relative overflow-hidden" id="testimonials">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -59,11 +59,11 @@ export const ContactTestimonialsSection = () => {
                   <Star key={i} className="w-4 h-4 text-primary fill-primary" />
                 ))}
               </div>
-              
+
               <p className="text-slate-600 font-light leading-relaxed text-lg mb-10 flex-grow">
                 &quot;{testimonial.review}&quot;
               </p>
-              
+
               <div className="flex items-center gap-4 mt-auto pt-6 border-t border-slate-200">
                 <div className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-primary font-serif font-bold text-lg shadow-sm group-hover:bg-primary group-hover:text-white transition-colors duration-500">
                   {testimonial.name.charAt(0)}

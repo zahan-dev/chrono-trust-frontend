@@ -10,25 +10,25 @@ const steps = [
   {
     number: "01",
     title: "Submit Details",
-    description: "Share photos and information about your timepiece through our secure form or WhatsApp.",
+    description: "Share detailed information and high-quality photos of your authenticated luxury watch through our secure online form or WhatsApp. This helps us provide an accurate valuation and fast response.",
     icon: Camera,
   },
   {
     number: "02",
     title: "Expert Evaluation",
-    description: "Our specialists assess condition, authenticity, and current market value.",
+    description: "Our certified watch specialists assess your timepiece for authenticity, condition, and current market value, ensuring you receive a fair and professional appraisal.",
     icon: Search,
   },
   {
     number: "03",
     title: "Receive Offer",
-    description: "We present a competitive offer based on fair market value and demand.",
+    description: "We present a competitive, data-driven offer based on market demand and fair value, connecting you with serious buyers worldwide.",
     icon: DollarSign,
   },
   {
     number: "04",
     title: "Secure Payment",
-    description: "Once accepted, receive prompt payment via your preferred method.",
+    description: "Once the offer is accepted, receive fast and secure payment via your preferred method, backed by our trusted transaction process.",
     icon: FileCheck,
   },
 ];
@@ -44,21 +44,25 @@ const benefits = [
 
 const faqs = [
   {
-    question: "How do I get a valuation?",
-    answer: "Simply contact us via WhatsApp or our contact form with photos and details of your watch. Our experts will provide a free, no-obligation valuation within 24-48 hours.",
+    question: "How can I get an accurate valuation for my luxury watch?",
+    answer: "Submit your watch details via our secure form or WhatsApp, including high-quality photos, serial numbers, and any original papers. Our certified watch experts provide a free, no-obligation professional valuation within 24–48 hours.",
   },
   {
-    question: "What information do you need?",
-    answer: "We need clear photos of the watch, serial number, any box and papers you have, and a description of its condition. The more details, the more accurate our valuation.",
+    question: "What information do I need to provide?",
+    answer: "We require clear photos, serial numbers, original box & papers if available, and a detailed description of the watch’s condition. The more precise the details, the more accurate and fair the valuation.",
   },
   {
-    question: "How quickly will I be paid?",
-    answer: "Once we receive and authenticate your watch, payment is processed within 24 hours via wire transfer, check, or other agreed method.",
+    question: "How quickly will I receive payment?",
+    answer: "Once your watch is authenticated and the offer accepted, payment is processed via wire transfer, check, or your preferred method, typically within 24 hours for a fast and secure transaction.",
   },
   {
-    question: "Do you buy watches without box and papers?",
-    answer: "Yes, we purchase watches with or without original box and papers. While complete sets may command higher prices, we buy timepieces in various conditions.",
+    question: "Do you buy watches without the original box or papers?",
+    answer: "Yes, we purchase watches with or without the original box and papers. While full sets may command higher prices, we evaluate every piece individually to ensure fair value.",
   },
+  {
+    question: "Is the selling process safe and secure?",
+    answer: "Absolutely. Every step is handled by certified watch specialists with insured shipping, secure payment processing, and transparency, ensuring your watch and funds are fully protected.",
+  }
 ];
 
 export default function SellPage() {
@@ -89,13 +93,11 @@ export default function SellPage() {
                 <ChevronRight className="w-4 h-4" />
                 <span>Sell</span>
               </div>
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-6">
-                Sell Your Timepiece
+              <h1 className="font-serif text-4xl md:text-5xl font-medium tracking-tight mb-6">
+                Sell Your Luxury Timepiece with Confidence
               </h1>
               <p className="text-lg text-white/80 font-light leading-relaxed max-w-2xl mb-8">
-                Maximize the value of your luxury watch with our expert service. 
-                We connect you with serious buyers worldwide and ensure a smooth, 
-                secure transaction process.
+                Maximize the value of your authenticated luxury watch with ChronoTrust. Our team connects you with serious buyers worldwide, provides accurate market valuations, and ensures a secure, seamless, and transparent transaction process from start to finish.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
@@ -157,7 +159,7 @@ export default function SellPage() {
                 Simple Process
               </p>
               <h2 className="font-serif text-3xl md:text-4xl text-primary">
-                How to Sell Your Watch
+                How to Sell Your Luxury Watch
               </h2>
             </div>
 
@@ -203,12 +205,10 @@ export default function SellPage() {
                   Why Choose Us
                 </p>
                 <h2 className="font-serif text-3xl md:text-4xl text-primary mb-6">
-                  The Smart Way to Sell
+                  The Smart Way to Sell Your Luxury Watch
                 </h2>
                 <p className="text-slate-600 font-light leading-relaxed mb-8">
-                  With years of experience and a global network of collectors, we 
-                  ensure you receive the best value for your timepiece with minimal 
-                  effort and maximum security.
+                  With decades of experience and a global network of collectors, ChronoTrust ensures you receive the best value for your authenticated luxury watch with minimal effort, maximum security, and complete peace of mind. Every step of the selling process is handled by certified watch experts to make your experience seamless and rewarding.
                 </p>
 
                 <ul className="space-y-4">
@@ -229,7 +229,7 @@ export default function SellPage() {
               >
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
                   <Image
-                    src="https://images.unsplash.com/photo-1547996663-b8308d6e161c?w=800&q=80"
+                    src="/Patek Philippe 1.webp"
                     alt="Watch evaluation"
                     fill
                     className="object-cover"
@@ -279,7 +279,7 @@ export default function SellPage() {
                   Ready to Sell?
                 </h2>
                 <p className="text-white/70 font-light leading-relaxed">
-                  Get your free, no-obligation valuation today. Our team is ready 
+                  Get your free, no-obligation valuation today. Our team is ready
                   to help you achieve the best price for your timepiece.
                 </p>
               </div>

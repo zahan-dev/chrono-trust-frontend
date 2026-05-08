@@ -10,25 +10,25 @@ const steps = [
   {
     number: "01",
     title: "Browse Collection",
-    description: "Explore our curated selection of authenticated luxury timepieces from the world's finest makers.",
+    description: "Explore our curated selection of authenticated luxury watches from the world’s finest makers. Every timepiece is verified for authenticity and condition, ensuring confidence in your choice.",
     icon: Search,
   },
   {
     number: "02",
     title: "Expert Consultation",
-    description: "Schedule a private appointment with our specialists to view pieces in person or discuss details.",
+    description: "Schedule a private appointment with our certified watch specialists to view pieces in person or discuss details. Receive personalized guidance to find the perfect watch for your collection.",
     icon: MessageCircle,
   },
   {
     number: "03",
     title: "Authentication",
-    description: "Every watch undergoes rigorous inspection by our master watchmakers before delivery.",
+    description: "Each watch undergoes a rigorous inspection by our master watchmakers, ensuring every piece meets the highest standards of quality, accuracy, and authenticity.",
     icon: FileCheck,
   },
   {
     number: "04",
     title: "Secure Delivery",
-    description: "Your timepiece is shipped fully insured with white-glove service to your door.",
+    description: "Your timepiece is shipped fully insured and with white-glove service, ensuring safe, discreet, and timely delivery to your door.",
     icon: Truck,
   },
 ];
@@ -82,12 +82,10 @@ export default function BuyPage() {
                 <span>Buy</span>
               </div>
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-6">
-                Acquire Your Perfect Timepiece
+                Acquire Your Perfect Luxury Timepiece
               </h1>
               <p className="text-lg text-white/80 font-light leading-relaxed max-w-2xl mb-8">
-                Discover authenticated luxury watches from the world&apos;s most prestigious 
-                brands. Every piece in our collection meets the highest standards of 
-                quality and authenticity.
+                Discover authenticated luxury watches from the world’s most prestigious brands. Every timepiece in our collection is carefully verified for authenticity, quality, and provenance, giving you confidence in every purchase. Whether you’re a seasoned collector or first-time buyer, ChronoTrust ensures a seamless and expert-led buying experience.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button href="/collection" variant="secondary">
@@ -182,9 +180,7 @@ export default function BuyPage() {
                   The ChronoTrust Guarantee
                 </h2>
                 <p className="text-slate-600 font-light leading-relaxed mb-8">
-                  Every timepiece we sell comes with our comprehensive guarantee, 
-                  providing you with complete peace of mind and protection for your 
-                  investment.
+                  Every timepiece you acquire from ChronoTrust comes with our comprehensive guarantee, ensuring your purchase is secure, authenticated, and backed by exceptional care and expertise. Enjoy complete peace of mind and protection for your investment.
                 </p>
 
                 <ul className="space-y-4">
@@ -205,10 +201,10 @@ export default function BuyPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div className="text-center max-w-2xl mx-auto mb-12">
               <p className="text-[11px] tracking-[0.3em] uppercase text-silver mb-4">
-                Brands We Carry
+                Our Brands
               </p>
               <h2 className="font-serif text-3xl md:text-4xl text-primary">
-                Prestigious Makers
+                Prestigious Makers You Can Trust
               </h2>
             </div>
 
@@ -229,7 +225,7 @@ export default function BuyPage() {
 
             <div className="text-center mt-8">
               <p className="text-slate-500 text-sm">
-                And many more prestigious brands...
+                And a wide selection of additional prestigious makers to complement every collection.
               </p>
             </div>
           </div>
@@ -245,11 +241,10 @@ export default function BuyPage() {
               transition={{ duration: 0.8 }}
             >
               <h2 className="font-serif text-3xl md:text-4xl mb-4">
-                Begin Your Search
+                Begin Your Luxury Watch Search
               </h2>
               <p className="text-white/70 font-light max-w-xl mx-auto mb-8">
-                Explore our collection or contact our team for personalized assistance 
-                in finding your perfect timepiece.
+                Explore our curated collection of authenticated luxury watches, or contact our expert team for personalized guidance. Whether you’re looking to buy a rare timepiece, add to your collection, or find an investment-worthy watch, ChronoTrust ensures a secure, expert-led, and seamless experience.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button href="/collection" variant="secondary">
