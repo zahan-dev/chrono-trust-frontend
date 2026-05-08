@@ -94,7 +94,7 @@ export default function BuyPage() {
                 <Button
                   href="https://wa.me/17328329938"
                   target="_blank"
-                  variant="outline"
+                  variant="primary"
                 >
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Speak to an Expert
@@ -253,7 +253,7 @@ export default function BuyPage() {
                 <Button
                   href="https://wa.me/17328329938"
                   target="_blank"
-                  variant="outline"
+                  variant="primary"
                 >
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Chat on WhatsApp

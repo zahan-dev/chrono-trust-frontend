@@ -108,7 +108,7 @@ export default function TradePage() {
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Start Trading
                 </Button>
-                <Button href="/collection" variant="outline">
+                <Button href="/collection" variant="primary">
                   Browse Collection <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>
@@ -295,7 +295,7 @@ export default function TradePage() {
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Discuss Your Trade
                 </Button>
-                <Button href="/collection" variant="outline">
+                <Button href="/collection" variant="primary">
                   Browse Upgrades <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>

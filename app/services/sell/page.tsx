@@ -108,7 +108,7 @@ export default function SellPage() {
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Get Valuation
                 </Button>
-                <Button href="/contact" variant="outline">
+                <Button href="/contact" variant="primary">
                   Contact Us <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>
@@ -292,7 +292,7 @@ export default function SellPage() {
                   <MessageCircle className="w-4 h-4 mr-2" />
                   WhatsApp Valuation
                 </Button>
-                <Button href="/contact" variant="outline">
+                <Button href="/contact" variant="primary">
                   Contact Form
                 </Button>
               </div>

@@ -103,11 +103,6 @@ export const Footer = () => {
                   Trade Watches <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
                 </a>
               </li>
-              <li>
-                <a href="/services/consignment" className="text-white/50 hover:text-white transition-colors inline-flex items-center gap-2 group">
-                  Consignment <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
-                </a>
-              </li>
             </ul>
           </div>
           

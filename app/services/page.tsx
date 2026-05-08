@@ -208,7 +208,7 @@ export default function ServicesPage() {
                 >
                   Chat on WhatsApp
                 </Button>
-                <Button href="/contact" variant="outline">
+                <Button href="/contact" variant="primary">
                   Contact Us
                 </Button>
               </div>
