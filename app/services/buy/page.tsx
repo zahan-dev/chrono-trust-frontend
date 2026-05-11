@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
@@ -58,6 +58,25 @@ const brands = [
   "Jaeger-LeCoultre",
 ];
 
+const faqs = [
+  {
+    question: "Are all luxury watches authenticated before sale?",
+    answer: "Yes, every timepiece at ChronoTrust undergoes a detailed authentication and inspection process before being listed for sale. Our specialists verify the movement, serial numbers, condition, and originality to ensure buyers receive authentic pre-owned luxury watches with complete confidence.",
+  },
+  {
+    question: "Is it safe to buy pre-owned luxury watches online?",
+    answer: "Yes. We focus on secure transactions, verified authentication, insured shipping, and transparent communication throughout the buying process. Our goal is to provide a trusted and reliable experience for anyone purchasing pre-owned luxury watches online.",
+  },
+  {
+    question: "Can you help me find a specific luxury watch model?",
+    answer: "Absolutely. Our sourcing team helps clients locate rare and highly sought-after luxury timepieces through our trusted watch network. Whether you are searching for Rolex, Audemars Piguet, Patek Philippe, or used Panerai watches, we can assist you in finding the right model.",
+  },
+  {
+    question: "Why should I buy a pre-owned luxury watch instead of a new one?",
+    answer: "Pre-owned luxury watches often offer better value, greater model availability, and access to discontinued collections that are difficult to purchase at retail stores. Many collectors prefer the pre-owned luxury watch market because it provides opportunities to own premium timepieces at competitive prices.",
+  },
+];
+
 export default function BuyPage() {
   const createInquiry = useCreateInquiry();
   const [formData, setFormData] = useState({
@@ -74,6 +93,7 @@ export default function BuyPage() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -336,6 +356,61 @@ export default function BuyPage() {
                 </form>
               )}
             </motion.div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="py-16 lg:py-20 bg-[#FAFAFA]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <div className="mb-10">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4 tracking-wide uppercase">
+                FREQUENTLY ASKED QUESTIONS
+              </h2>
+              <p className="text-slate-600 font-light text-base md:text-lg leading-relaxed max-w-2xl">
+                Get answers to common questions about buying authenticated pre-owned luxury watches from ChronoTrust.
+              </p>
+            </div>
+
+            <div className="space-y-0">
+              {faqs.map((faq, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <div
+                    key={index}
+                    className={`border-b transition-colors duration-500 ${isOpen ? 'border-primary/20' : 'border-slate-200 hover:border-slate-300'}`}
+                  >
+                    <button
+                      className="w-full py-6 md:py-8 text-left flex items-center justify-between focus:outline-none group gap-6"
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                    >
+                      <div className="flex gap-4 sm:gap-6 items-center">
+                        <span className={`font-serif text-lg sm:text-xl font-medium pr-4 leading-tight transition-colors duration-500 ${isOpen ? 'text-primary' : 'text-slate-800 group-hover:text-primary'}`}>
+                          {index + 1}. {faq.question}
+                        </span>
+                      </div>
+                      <div className={`shrink-0 w-8 h-8 flex items-center justify-center font-light text-2xl transition-colors duration-500 ${isOpen ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>
+                        {isOpen ? '-' : '+'}
+                      </div>
+                    </button>
+
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                          <div className="pr-8 sm:pr-16 pb-8 text-slate-500 font-light leading-relaxed text-base">
+                            {faq.answer}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </section>
 

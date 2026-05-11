@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
@@ -72,6 +72,25 @@ const scenarios = [
   },
 ];
 
+const faqs = [
+  {
+    question: "How does the luxury watch trade process work?",
+    answer: "Our luxury watch trade process is designed to be secure, transparent, and straightforward. Simply submit your watch details and photos, receive a professional market evaluation from our specialists, and trade your current timepiece for another authenticated pre-owned luxury watch from our collection.",
+  },
+  {
+    question: "Are all watches authenticated before a trade is completed?",
+    answer: "Yes. Every watch involved in a trade undergoes a detailed authentication and inspection process. Our specialists verify the movement, condition, serial numbers, and originality to ensure collectors receive authentic luxury watches with complete confidence.",
+  },
+  {
+    question: "How is the value of my luxury watch determined?",
+    answer: "Trade valuations are based on several important factors, including brand demand, model rarity, condition, service history, market trends, and the availability of the original box and papers. We use current luxury watch market data to provide fair and competitive trade offers.",
+  },
+  {
+    question: "Can I trade my watch for a more expensive model?",
+    answer: "Yes. Many collectors use our luxury watch trade service to upgrade to higher-value or rare timepieces. You can apply the value of your current watch toward another authenticated luxury watch available in our inventory.",
+  },
+];
+
 export default function TradePage() {
   const createInquiry = useCreateInquiry();
   const [formData, setFormData] = useState({
@@ -88,6 +107,7 @@ export default function TradePage() {
     additionalDetails: '',
     smsConsent: false,
   });
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [images, setImages] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -579,6 +599,61 @@ SMS Consent: ${formData.smsConsent ? 'Yes' : 'No'}`;
                 </form>
               )}
             </motion.div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="py-16 lg:py-20 bg-[#FAFAFA]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <div className="mb-10">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4 tracking-wide uppercase">
+                FREQUENTLY ASKED QUESTIONS
+              </h2>
+              <p className="text-slate-600 font-light text-base md:text-lg leading-relaxed max-w-2xl">
+                Get answers to common questions about trading your luxury watch with ChronoTrust.
+              </p>
+            </div>
+
+            <div className="space-y-0">
+              {faqs.map((faq, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <div
+                    key={index}
+                    className={`border-b transition-colors duration-500 ${isOpen ? 'border-primary/20' : 'border-slate-200 hover:border-slate-300'}`}
+                  >
+                    <button
+                      className="w-full py-6 md:py-8 text-left flex items-center justify-between focus:outline-none group gap-6"
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                    >
+                      <div className="flex gap-4 sm:gap-6 items-center">
+                        <span className={`font-serif text-lg sm:text-xl font-medium pr-4 leading-tight transition-colors duration-500 ${isOpen ? 'text-primary' : 'text-slate-800 group-hover:text-primary'}`}>
+                          {index + 1}. {faq.question}
+                        </span>
+                      </div>
+                      <div className={`shrink-0 w-8 h-8 flex items-center justify-center font-light text-2xl transition-colors duration-500 ${isOpen ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>
+                        {isOpen ? '-' : '+'}
+                      </div>
+                    </button>
+
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                          <div className="pr-8 sm:pr-16 pb-8 text-slate-500 font-light leading-relaxed text-base">
+                            {faq.answer}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </section>
 
