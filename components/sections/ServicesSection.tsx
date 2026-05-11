@@ -11,7 +11,7 @@ export const ServicesSection = () => {
       icon: Watch,
       title: 'Acquire',
       description: 'Discover rare, unworn, and highly sought-after luxury timepieces sourced from our global network of trusted collectors. Each piece is carefully verified for authenticity and quality.',
-      link: '/collection'
+      link: '/services/buy'
     },
     {
       icon: Wallet,

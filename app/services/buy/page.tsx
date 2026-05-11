@@ -1,10 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { CheckCircle, Shield, Search, FileCheck, Truck, MessageCircle, ArrowRight, ChevronRight } from "lucide-react";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
+import { Checkbox } from "@/components/ui/Checkbox";
+import { CheckCircle, Shield, Search, FileCheck, Truck, MessageCircle, ArrowRight, ChevronRight, Loader2 } from "lucide-react";
+import { useCreateInquiry } from "@/hooks/useInquiries";
 
 const steps = [
   {
@@ -54,6 +59,64 @@ const brands = [
 ];
 
 export default function BuyPage() {
+  const createInquiry = useCreateInquiry();
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    referenceNumber: '',
+    brand: '',
+    model: '',
+    budget: '',
+    timeframe: '',
+    additionalDetails: '',
+    smsConsent: false,
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Invalid email';
+    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
+    if (!formData.referenceNumber.trim()) newErrors.referenceNumber = 'Reference number is required';
+    if (!formData.brand.trim()) newErrors.brand = 'Brand is required';
+    if (!formData.model.trim()) newErrors.model = 'Model is required';
+    if (!formData.budget.trim()) newErrors.budget = 'Budget is required';
+    if (!formData.timeframe.trim()) newErrors.timeframe = 'Timeframe is required';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateForm()) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    try {
+      const message = `ACQUISITION REQUEST\n\nWatch Details:\nReference: ${formData.referenceNumber}\nBrand: ${formData.brand}\nModel: ${formData.model}\nBudget: $${formData.budget} USD\nTimeframe: ${formData.timeframe}\n\nAdditional Details:\n${formData.additionalDetails || 'N/A'}\n\nSMS Consent: ${formData.smsConsent ? 'Yes' : 'No'}`;
+      await createInquiry.mutateAsync({
+        name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        message,
+      });
+      setIsSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+      alert('Failed to submit. Please try again.');
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
+  };
+
   return (
     <>
       <main className="min-h-screen bg-[#FAFAFA]">
@@ -105,7 +168,7 @@ export default function BuyPage() {
         </section>
 
         {/* Process Steps */}
-        <section className="py-20 lg:py-28">
+        <section className="py-14 lg:py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div className="text-center max-w-2xl mx-auto mb-16">
               <p className="text-[11px] tracking-[0.3em] uppercase text-silver mb-4">
@@ -197,7 +260,7 @@ export default function BuyPage() {
         </section>
 
         {/* Brands Section */}
-        <section className="py-20 lg:py-28">
+        <section className="py-14 lg:py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div className="text-center max-w-2xl mx-auto mb-12">
               <p className="text-[11px] tracking-[0.3em] uppercase text-silver mb-4">
@@ -231,36 +294,85 @@ export default function BuyPage() {
           </div>
         </section>
 
+        {/* Acquisition Form */}
+        <section className="py-14 lg:py-20 bg-white border-y border-slate-100">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+              <div className="text-center mb-12">
+                <p className="text-[11px] tracking-[0.3em] uppercase text-silver mb-4">Request Acquisition</p>
+                <h2 className="font-serif text-3xl md:text-4xl text-primary mb-4">Acquisition Services</h2>
+                <p className="text-slate-600 font-light max-w-2xl mx-auto">Let us help you find your perfect timepiece. Fill out the form and our experts will contact you within 24 hours.</p>
+              </div>
+              {isSubmitted ? (
+                <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"><CheckCircle className="w-8 h-8 text-green-600" /></div>
+                  <h3 className="font-serif text-2xl text-primary mb-2">Request Submitted!</h3>
+                  <p className="text-slate-600 mb-6">Our team will contact you within 24 hours to discuss your acquisition.</p>
+                  <Button onClick={() => setIsSubmitted(false)} variant="primary">Submit Another Request</Button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-slate-100 p-8 lg:p-10 shadow-sm">
+                  <div className="grid md:grid-cols-2 gap-6 mb-6">
+                    <Input label="Full Name" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="John Doe" required error={errors.fullName} />
+                    <Input label="Email Address" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" required error={errors.email} />
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-6 mb-6">
+                    <Input label="Phone Number" name="phone" type="tel" value={formData.phone} onChange={handleChange} placeholder="+1 (555) 000-0000" required error={errors.phone} />
+                    <Input label="Reference Number" name="referenceNumber" value={formData.referenceNumber} onChange={handleChange} placeholder="Type watch name or reference" required error={errors.referenceNumber} />
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-6 mb-6">
+                    <Input label="Brand" name="brand" value={formData.brand} onChange={handleChange} placeholder="Rolex" required error={errors.brand} />
+                    <Input label="Model" name="model" value={formData.model} onChange={handleChange} placeholder="Submariner" required error={errors.model} />
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-6 mb-6">
+                    <Input label="Budget (USD)" name="budget" type="number" value={formData.budget} onChange={handleChange} placeholder="50000" required error={errors.budget} />
+                    <Input label="Timeframe" name="timeframe" value={formData.timeframe} onChange={handleChange} placeholder="Within a week" required error={errors.timeframe} />
+                  </div>
+                  <div className="mb-6"><Textarea label="Additional Details" name="additionalDetails" value={formData.additionalDetails} onChange={handleChange} placeholder="Any specific requirements..." rows={4} /></div>
+                  <div className="mb-8"><Checkbox label="I consent to receiving SMS communications from ChronoTrust." name="smsConsent" checked={formData.smsConsent} onChange={handleChange} /></div>
+                  <Button type="submit" variant="primary" disabled={createInquiry.isPending} className="w-full py-4 text-base">
+                    {createInquiry.isPending ? <><Loader2 className="w-5 h-5 mr-2 animate-spin" />Submitting...</> : 'Submit Acquisition Request'}
+                  </Button>
+                </form>
+              )}
+            </motion.div>
+          </div>
+        </section>
+
         {/* CTA Section */}
-        <section className="py-20 lg:py-28 bg-primary text-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="font-serif text-3xl md:text-4xl mb-4">
-                Begin Your Luxury Watch Search
-              </h2>
-              <p className="text-white/70 font-light max-w-xl mx-auto mb-8">
-                Explore our curated collection of authenticated luxury watches, or contact our expert team for personalized guidance. Whether you’re looking to buy a rare timepiece, add to your collection, or find an investment-worthy watch, ChronoTrust ensures a secure, expert-led, and seamless experience.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button href="/collection" variant="secondary">
-                  View Collection <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-                <Button
-                  href="https://wa.me/17328329938"
-                  target="_blank"
-                  variant="primary"
-                >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Chat on WhatsApp
-                </Button>
+        <section className="relative py-16 lg:py-24 bg-gradient-to-br from-[#2d5b8f] via-[#1e3a5f] to-[#152a47] text-white overflow-hidden">
+          {/* Elegant top separator */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+          
+          {/* Subtle pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
+          
+          {/* Glow effects */}
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-300/10 rounded-full blur-3xl"></div>
+          
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <p className="text-[11px] tracking-[0.3em] uppercase text-blue-200 mb-4 font-semibold">Expert Guidance</p>
+                  <h2 className="font-serif text-4xl md:text-5xl mb-6 leading-tight">Questions About Buying?</h2>
+                  <p className="text-white/80 font-light leading-relaxed text-lg">Our experts are ready to help you find the perfect timepiece for your collection. Get personalized recommendations and exclusive access.</p>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center justify-end gap-4">
+                  <Button href="https://wa.me/17328329938" target="_blank" variant="secondary" className="shadow-xl shadow-black/20">
+                    <MessageCircle className="w-4 h-4 mr-2" />Chat on WhatsApp
+                  </Button>
+                  <Button href="/collection" variant="primary" className="shadow-xl shadow-black/20">
+                    View Collection <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
               </div>
             </motion.div>
           </div>
+          
+          {/* Bottom elegant separator */}
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
         </section>
       </main>
     </>

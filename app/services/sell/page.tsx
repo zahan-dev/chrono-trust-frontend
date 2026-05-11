@@ -1,10 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { Tag, Camera, Search, DollarSign, FileCheck, Truck, MessageCircle, ArrowRight, ChevronRight, CheckCircle } from "lucide-react";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
+import { Checkbox } from "@/components/ui/Checkbox";
+import { ImageUpload } from "@/components/ui/ImageUpload";
+import { Tag, Camera, Search, DollarSign, FileCheck, Truck, MessageCircle, ArrowRight, ChevronRight, CheckCircle, Loader2 } from "lucide-react";
+import { useCreateInquiry } from "@/hooks/useInquiries";
 
 const steps = [
   {
@@ -34,12 +40,12 @@ const steps = [
 ];
 
 const benefits = [
-  "Free, no-obligation valuation",
-  "Competitive market-based pricing",
-  "Global network of buyers",
-  "Secure and insured shipping",
-  "Fast payment processing",
-  "Hassle-free experience",
+  "Free, no-obligation professional valuation",
+  "Competitive, market-driven pricing",
+  "Access to our global network of serious buyers",
+  "Secure and fully insured shipping",
+  "Fast, reliable payment processing",
+  "Hassle-free, expert-guided selling experience",
 ];
 
 const faqs = [
@@ -66,6 +72,64 @@ const faqs = [
 ];
 
 export default function SellPage() {
+  const createInquiry = useCreateInquiry();
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    watchBrand: '',
+    watchModel: '',
+    additionalNotes: '',
+    hearAboutUs: '',
+    transactionalConsent: false,
+    marketingConsent: false,
+  });
+  const [images, setImages] = useState<string[]>([]);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
+    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
+    if (!formData.phone.trim()) newErrors.phone = 'Phone is required';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Invalid email';
+    if (!formData.watchBrand.trim()) newErrors.watchBrand = 'Watch brand is required';
+    if (!formData.watchModel.trim()) newErrors.watchModel = 'Watch model is required';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateForm()) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    try {
+      const message = `CONSIGNMENT SUBMISSION\n\nSeller Info:\nName: ${formData.firstName} ${formData.lastName}\nPhone: ${formData.phone}\nEmail: ${formData.email}\n\nWatch Details:\nBrand: ${formData.watchBrand}\nModel/Reference: ${formData.watchModel}\n\nAdditional Notes:\n${formData.additionalNotes || 'N/A'}\n\nHow they heard about us: ${formData.hearAboutUs || 'N/A'}\n\nPhotos: ${images.length > 0 ? images.join(', ') : 'None'}\n\nConsents:\nTransactional: ${formData.transactionalConsent ? 'Yes' : 'No'}\nMarketing: ${formData.marketingConsent ? 'Yes' : 'No'}`;
+      await createInquiry.mutateAsync({
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        phone: formData.phone,
+        message,
+      });
+      setIsSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+      alert('Failed to submit. Please try again.');
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
+  };
+
   return (
     <>
       <main className="min-h-screen bg-[#FAFAFA]">
@@ -152,7 +216,7 @@ export default function SellPage() {
         </section>
 
         {/* Process Steps */}
-        <section className="py-20 lg:py-28">
+        <section className="py-14 lg:py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div className="text-center max-w-2xl mx-auto mb-16">
               <p className="text-[11px] tracking-[0.3em] uppercase text-silver mb-4">
@@ -192,7 +256,7 @@ export default function SellPage() {
         </section>
 
         {/* Benefits Section */}
-        <section className="py-20 lg:py-28 bg-white border-y border-slate-100">
+        <section className="py-14 lg:py-20 bg-white border-y border-slate-100">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <motion.div
@@ -240,64 +304,137 @@ export default function SellPage() {
           </div>
         </section>
 
-        {/* FAQs */}
-        <section className="py-20 lg:py-28">
+        {/* Sell Form */}
+        <section className="py-14 lg:py-20 bg-white border-y border-slate-100">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-            <div className="text-center mb-12">
-              <p className="text-[11px] tracking-[0.3em] uppercase text-silver mb-4">
-                Common Questions
-              </p>
-              <h2 className="font-serif text-3xl md:text-4xl text-primary">
-                Frequently Asked Questions
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+              <div className="text-center mb-12">
+                <p className="text-[11px] tracking-[0.3em] uppercase text-silver mb-4">Submit Your Watch</p>
+                <h2 className="font-serif text-3xl md:text-4xl text-primary mb-4">Consignment Submission Form</h2>
+                <p className="text-slate-600 font-light max-w-2xl mx-auto">Fill out the form below and our team will contact you via email about your watch within 24 hours.</p>
+              </div>
+              {isSubmitted ? (
+                <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"><CheckCircle className="w-8 h-8 text-green-600" /></div>
+                  <h3 className="font-serif text-2xl text-primary mb-2">Submission Received!</h3>
+                  <p className="text-slate-600 mb-6">We will contact you via email within 24 hours to discuss your watch.</p>
+                  <Button onClick={() => setIsSubmitted(false)} variant="primary">Submit Another Watch</Button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-slate-100 p-8 lg:p-10 shadow-sm">
+                  <div className="grid md:grid-cols-2 gap-6 mb-6">
+                    <Input label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="John" required error={errors.firstName} />
+                    <Input label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Doe" required error={errors.lastName} />
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-6 mb-6">
+                    <Input label="Phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} placeholder="+1 (555) 000-0000" required error={errors.phone} />
+                    <Input label="Email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" required error={errors.email} helperText="We will contact you via email about your watch" />
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-6 mb-6">
+                    <Input label="Watch Brand" name="watchBrand" value={formData.watchBrand} onChange={handleChange} placeholder="Rolex, Omega, Panerai etc" required error={errors.watchBrand} />
+                    <Input label="Watch Model / Reference" name="watchModel" value={formData.watchModel} onChange={handleChange} placeholder="Include model name/reference number" required error={errors.watchModel} />
+                  </div>
+                  <div className="mb-6"><ImageUpload label="File Upload" maxImages={12} onImagesChange={setImages} /></div>
+                  <div className="mb-6"><Textarea label="Additional Notes" name="additionalNotes" value={formData.additionalNotes} onChange={handleChange} placeholder="Any additional information about your watch..." rows={4} /></div>
+                  <div className="mb-6"><Input label="How did you hear about us?" name="hearAboutUs" value={formData.hearAboutUs} onChange={handleChange} placeholder="Google, Instagram, Friend/Family etc" /></div>
+                  <div className="mb-4"><Checkbox label="I consent to receiving transactional messages from ChronoTrust." name="transactionalConsent" checked={formData.transactionalConsent} onChange={handleChange} /></div>
+                  <div className="mb-8"><Checkbox label="I consent to receiving marketing and promotional messages from ChronoTrust." name="marketingConsent" checked={formData.marketingConsent} onChange={handleChange} /></div>
+                  <Button type="submit" variant="primary" disabled={createInquiry.isPending} className="w-full py-4 text-base">
+                    {createInquiry.isPending ? <><Loader2 className="w-5 h-5 mr-2 animate-spin" />Submitting...</> : 'Submit Consignment'}
+                  </Button>
+                </form>
+              )}
+            </motion.div>
+          </div>
+        </section>
+        
+        {/* FAQs */}
+        <section className="py-16 lg:py-20 bg-[#FAFAFA]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <div className="mb-10">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4 tracking-wide uppercase">
+                FREQUENTLY ASKED QUESTIONS
               </h2>
+              <p className="text-slate-600 font-light text-base md:text-lg leading-relaxed max-w-2xl">
+                Get answers to common questions about selling your luxury watch with ChronoTrust.
+              </p>
             </div>
 
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <motion.div
-                  key={faq.question}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="bg-white p-6 rounded-xl border border-slate-100"
-                >
-                  <h3 className="font-serif text-lg text-primary mb-2">{faq.question}</h3>
-                  <p className="text-slate-600 font-light">{faq.answer}</p>
-                </motion.div>
-              ))}
+            <div className="space-y-0">
+              {faqs.map((faq, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <div
+                    key={index}
+                    className={`border-b transition-colors duration-500 ${isOpen ? 'border-primary/20' : 'border-slate-200 hover:border-slate-300'}`}
+                  >
+                    <button
+                      className="w-full py-6 md:py-8 text-left flex items-center justify-between focus:outline-none group gap-6"
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                    >
+                      <div className="flex gap-4 sm:gap-6 items-center">
+                        <span className={`font-serif text-lg sm:text-xl font-medium pr-4 leading-tight transition-colors duration-500 ${isOpen ? 'text-primary' : 'text-slate-800 group-hover:text-primary'}`}>
+                          {index + 1}. {faq.question}
+                        </span>
+                      </div>
+                      <div className={`shrink-0 w-8 h-8 flex items-center justify-center font-light text-2xl transition-colors duration-500 ${isOpen ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>
+                        {isOpen ? '-' : '+'}
+                      </div>
+                    </button>
+
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                          <div className="pr-8 sm:pr-16 pb-8 text-slate-500 font-light leading-relaxed text-base">
+                            {faq.answer}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
-
+        
         {/* CTA Section */}
-        <section className="py-20 lg:py-28 bg-primary text-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <section className="relative py-16 lg:py-24 bg-gradient-to-br from-[#2d5b8f] via-[#1e3a5f] to-[#152a47] text-white overflow-hidden">
+          {/* Elegant top separator */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+          
+          {/* Subtle pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
+          
+          {/* Glow effects */}
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-300/10 rounded-full blur-3xl"></div>
+          
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="font-serif text-3xl md:text-4xl mb-4">
-                  Ready to Sell?
-                </h2>
-                <p className="text-white/70 font-light leading-relaxed">
-                  Get your free, no-obligation valuation today. Our team is ready
-                  to help you achieve the best price for your timepiece.
-                </p>
+                <p className="text-[11px] tracking-[0.3em] uppercase text-blue-200 mb-4 font-semibold">Get Expert Assistance</p>
+                <h2 className="font-serif text-4xl md:text-5xl mb-6 leading-tight">Questions About Selling?</h2>
+                <p className="text-white/80 font-light leading-relaxed text-lg">Our team is ready to help you achieve the best price for your timepiece. Get a professional valuation and personalized guidance.</p>
               </div>
               <div className="flex flex-col sm:flex-row items-center justify-end gap-4">
-                <Button
-                  href="https://wa.me/17328329938"
-                  target="_blank"
-                  variant="secondary"
-                >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  WhatsApp Valuation
+                <Button href="https://wa.me/17328329938" target="_blank" variant="secondary" className="shadow-xl shadow-black/20">
+                  <MessageCircle className="w-4 h-4 mr-2" />WhatsApp Valuation
                 </Button>
-                <Button href="/contact" variant="primary">
-                  Contact Form
+                <Button href="/contact" variant="primary" className="shadow-xl shadow-black/20">
+                  Contact Us
                 </Button>
               </div>
             </div>
           </div>
+          
+          {/* Bottom elegant separator */}
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
         </section>
       </main>
     </>

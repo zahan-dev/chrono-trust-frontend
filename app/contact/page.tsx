@@ -93,7 +93,7 @@ export default function ContactPage() {
         <section className="relative flex flex-col justify-center min-h-[60vh] pt-32 pb-24 overflow-hidden bg-primary">
           <div className="absolute inset-0 z-0">
             <Image
-              src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1920&q=80"
+              src="/IWC 1.webp"
               alt="Contact background"
               fill
               className="object-cover opacity-20 mix-blend-luminosity scale-105"
@@ -184,7 +184,7 @@ export default function ContactPage() {
 
                 <div className="relative aspect-4/3 rounded-3xl overflow-hidden mb-8 shadow-2xl border border-slate-100">
                   <Image
-                    src="https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=800&q=80"
+                    src="/rolex-1.jpg"
                     alt="ChronoTrust Showroom"
                     fill
                     className="object-cover"

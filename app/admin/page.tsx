@@ -42,7 +42,9 @@ import {
   LogOut,
   ArrowLeft,
   AlertCircle,
+  ImageIcon,
 } from 'lucide-react';
+import { Lightbox } from '@/components/ui/Lightbox';
 
 type Tab = 'products' | 'categories' | 'orders' | 'inquiries';
 
@@ -1166,6 +1168,21 @@ function InquiriesTab() {
   const { data: inquiries, isLoading } = useAllInquiries();
   const updateInquiryStatus = useUpdateInquiryStatus();
   const [expandedInquiry, setExpandedInquiry] = useState<string | null>(null);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const extractImageUrls = (message: string): string[] => {
+    const urlRegex = /https?:\/\/[^\s,]+\.(jpg|jpeg|png|webp|gif)/gi;
+    const matches = message.match(urlRegex);
+    return matches || [];
+  };
+
+  const openLightbox = (images: string[], index: number) => {
+    setLightboxImages(images);
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
 
   const statusColors: Record<string, string> = {
     OPEN: 'bg-yellow-100 text-yellow-600',
@@ -1253,6 +1270,43 @@ function InquiriesTab() {
                     </p>
                   </div>
 
+                  {(() => {
+                    const imageUrls = extractImageUrls(inquiry.message);
+                    if (imageUrls.length > 0) {
+                      return (
+                        <div className="mb-4">
+                          <p className="text-xs font-semibold uppercase text-slate-500 mb-2 flex items-center gap-2">
+                            <ImageIcon className="w-4 h-4" />
+                            Attached Images ({imageUrls.length})
+                          </p>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                            {imageUrls.map((url, idx) => (
+                              <button
+                                key={idx}
+                                onClick={() => openLightbox(imageUrls, idx)}
+                                className="relative aspect-square rounded-lg overflow-hidden bg-slate-100 border-2 border-slate-200 hover:border-primary transition-all group cursor-pointer"
+                              >
+                                <Image
+                                  src={url}
+                                  alt={`Inquiry image ${idx + 1}`}
+                                  fill
+                                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
+                                />
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                                  <div className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <ImageIcon className="w-4 h-4 text-primary" />
+                                  </div>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })()}
+
                   {inquiry.phone && (
                     <p className="text-sm text-slate-600 mb-4">
                       Phone: {inquiry.phone}
@@ -1281,6 +1335,13 @@ function InquiriesTab() {
           ))}
         </div>
       )}
+
+      <Lightbox
+        images={lightboxImages}
+        initialIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
     </div>
   );
 }
