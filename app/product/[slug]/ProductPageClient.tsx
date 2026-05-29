@@ -20,7 +20,7 @@ interface ProductPageClientProps {
 }
 
 export function ProductPageClient({ product }: ProductPageClientProps) {
-  const { data: related } = useRelatedProducts(product.id);
+  const { data: related } = useRelatedProducts(product.slug);
   const { isLoggedIn } = useAuth();
   const addToCart = useAddToCart();
   const createInquiry = useCreateInquiry();

@@ -76,21 +76,21 @@ export function useProduct(slug: string) {
   return useQuery<Product>({
     queryKey: ['product', slug],
     queryFn: async () => {
-      const { data } = await api.get(`/products/${slug}`);
+      const { data } = await api.get(`/products/slug/${slug}`);
       return data;
     },
     enabled: !!slug,
   });
 }
 
-export function useRelatedProducts(productId: string) {
+export function useRelatedProducts(slug: string) {
   return useQuery<Product[]>({
-    queryKey: ['products', 'related', productId],
+    queryKey: ['products', 'related', slug],
     queryFn: async () => {
-      const { data } = await api.get(`/products/${productId}/related`);
+      const { data } = await api.get(`/products/slug/${slug}/related`);
       return data;
     },
-    enabled: !!productId,
+    enabled: !!slug,
   });
 }
 
