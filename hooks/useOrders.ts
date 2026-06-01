@@ -22,8 +22,8 @@ export interface Order {
   postalCode: string;
   country: string;
   note?: string;
-  paymentMethod?: string;
-  paymentStatus?: 'PENDING' | 'PAID' | 'FAILED' | 'REFUNDED';
+  paymentMethod?: 'PAYPAL' | 'WIRE_TRANSFER';
+  paymentStatus?: 'PENDING' | 'AWAITING_TRANSFER' | 'PAID' | 'FAILED' | 'CANCELLED';
   paypalOrderId?: string;
   paypalCaptureId?: string;
   paypalTransactionId?: string;
@@ -43,7 +43,7 @@ export interface CreateOrderDto {
   postalCode: string;
   country: string;
   note?: string;
-  paymentMethod?: string;
+  paymentMethod?: 'PAYPAL' | 'WIRE_TRANSFER';
   items: { productId: string; quantity: number }[];
 }
 
@@ -86,6 +86,17 @@ export function useUpdateOrderStatus() {
   return useMutation({
     mutationFn: async ({ id, status }: { id: string; status: Order['status'] }) => {
       const { data } = await api.patch(`/orders/${id}/status`, { status });
+      return data;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin-orders'] }),
+  });
+}
+
+export function useUpdateOrderPaymentStatus() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, paymentStatus }: { id: string; paymentStatus: Order['paymentStatus'] }) => {
+      const { data } = await api.patch(`/orders/${id}/payment-status`, { paymentStatus });
       return data;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin-orders'] }),

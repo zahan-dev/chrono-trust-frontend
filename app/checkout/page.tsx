@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/hooks/useCart';
-import { useCreatePayPalOrder, useCapturePayPalOrder, type Order } from '@/hooks/useOrders';
+import { useCreatePayPalOrder, useCapturePayPalOrder, useCreateOrder, type Order } from '@/hooks/useOrders';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import api from '@/lib/axios';
 import { Package, ArrowLeft, CheckCircle, Loader2, AlertCircle } from 'lucide-react';
@@ -13,6 +13,7 @@ export default function CheckoutPage() {
   const { data: cart } = useCart();
   const createPayPalOrder = useCreatePayPalOrder();
   const capturePayPalOrder = useCapturePayPalOrder();
+  const createOrder = useCreateOrder();
 
   const [formData, setFormData] = useState({
     customerName: '',
@@ -26,9 +27,11 @@ export default function CheckoutPage() {
     note: '',
   });
 
+  const [paymentMethod, setPaymentMethod] = useState<'PAYPAL' | 'WIRE_TRANSFER'>('PAYPAL');
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderData, setOrderData] = useState<Order | null>(null);
   const [paypalError, setPaypalError] = useState('');
+  const [wireError, setWireError] = useState('');
   const [payPalClientId, setPayPalClientId] = useState('');
 
   useEffect(() => {
@@ -52,26 +55,95 @@ export default function CheckoutPage() {
     formData.postalCode &&
     formData.country;
 
-  if (orderComplete) {
+  if (orderComplete && orderData) {
+    const isWireTransfer = orderData.paymentMethod === 'WIRE_TRANSFER';
     return (
       <>
-        <main className="min-h-screen bg-[#FAFAFA] pt-32">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-24">
-            <div className="max-w-md mx-auto text-center">
+        <main className="min-h-screen bg-[#FAFAFA] pt-32 pb-20">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl py-12">
+            {/* Success Header */}
+            <div className="text-center mb-10">
               <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle className="w-10 h-10 text-green-600" />
               </div>
-              <h1 className="font-serif text-3xl text-primary mb-4">Order Confirmed</h1>
-              <p className="text-slate-600 mb-2">Thank you for your order!</p>
-              <p className="text-sm text-slate-500 mb-2">
-                Order Number: <span className="font-medium text-primary">{orderData?.orderNumber}</span>
+              <h1 className="font-serif text-3xl md:text-4xl text-primary mb-3">
+                Thank You for Your Order
+              </h1>
+              <p className="text-slate-600">
+                Our team will review and process your order shortly.
               </p>
-              <p className="text-sm text-slate-500 mb-2">
-                Payment: <span className="font-medium text-green-600">{orderData?.paymentStatus}</span>
-              </p>
-              <p className="text-sm text-slate-500 mb-8">
-                Total: <span className="font-medium text-primary">${orderData?.total?.toLocaleString()}</span>
-              </p>
+            </div>
+
+            {/* Wire Transfer Notice */}
+            {isWireTransfer && (
+              <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8">
+                <h3 className="font-semibold text-primary mb-2">Wire Transfer Selected</h3>
+                <p className="text-sm text-slate-600 mb-1">
+                  Your order has been placed successfully.
+                </p>
+                <p className="text-sm text-slate-600">
+                  Our team will contact you shortly with payment instructions.
+                </p>
+              </div>
+            )}
+
+            {/* Order Details Card */}
+            <div className="bg-white border border-slate-100 rounded-xl p-6 md:p-8 mb-8">
+              <h2 className="font-serif text-xl text-primary mb-6">Order Details</h2>
+              <div className="space-y-4">
+                <div className="flex justify-between py-3 border-b border-slate-50">
+                  <span className="text-sm text-slate-500">Order Number</span>
+                  <span className="text-sm font-semibold text-primary font-mono">{orderData.orderNumber}</span>
+                </div>
+                <div className="flex justify-between py-3 border-b border-slate-50">
+                  <span className="text-sm text-slate-500">Customer</span>
+                  <span className="text-sm font-medium text-primary">{orderData.customerName}</span>
+                </div>
+                <div className="flex justify-between py-3 border-b border-slate-50">
+                  <span className="text-sm text-slate-500">Email</span>
+                  <span className="text-sm font-medium text-primary">{orderData.customerEmail}</span>
+                </div>
+                <div className="flex justify-between py-3 border-b border-slate-50">
+                  <span className="text-sm text-slate-500">Payment Method</span>
+                  <span className="text-sm font-medium text-primary">{orderData.paymentMethod?.replace('_', ' ')}</span>
+                </div>
+                <div className="flex justify-between py-3 border-b border-slate-50">
+                  <span className="text-sm text-slate-500">Payment Status</span>
+                  <span className={`text-sm font-medium ${isWireTransfer ? 'text-amber-600' : 'text-green-600'}`}>
+                    {orderData.paymentStatus?.replace('_', ' ')}
+                  </span>
+                </div>
+                <div className="flex justify-between py-3">
+                  <span className="text-sm text-slate-500">Total</span>
+                  <span className="text-lg font-semibold text-primary">${orderData.total?.toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Order Items */}
+            <div className="bg-white border border-slate-100 rounded-xl p-6 md:p-8 mb-8">
+              <h2 className="font-serif text-xl text-primary mb-6">Order Summary</h2>
+              <div className="space-y-4">
+                {orderData.items.map((item) => (
+                  <div key={item.id} className="flex gap-4 items-center">
+                    <div className="w-16 h-16 bg-slate-50 rounded-lg overflow-hidden shrink-0">
+                      {item.product.images?.[0] ? (
+                        <Image src={item.product.images[0]} alt={item.product.title} width={64} height={64} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center"><Package className="w-6 h-6 text-slate-300" /></div>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-primary line-clamp-1">{item.product.title}</p>
+                      <p className="text-xs text-slate-500">Qty: {item.quantity}</p>
+                    </div>
+                    <p className="text-sm font-medium text-primary">${(item.price * item.quantity).toLocaleString()}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="text-center">
               <Link
                 href="/collection"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white text-sm font-semibold tracking-widest uppercase rounded-full hover:bg-primary/90 transition-colors"
@@ -318,14 +390,35 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                {/* PayPal */}
+                {/* Payment Method Selector */}
+                {isFormValid && (
+                  <div className="mt-6 space-y-3">
+                    <p className="text-xs font-semibold tracking-widest uppercase text-slate-500 mb-3">Payment Method</p>
+                    <label className={`flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition-all ${paymentMethod === 'PAYPAL' ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-primary/30'}`}>
+                      <input type="radio" name="paymentMethod" value="PAYPAL" checked={paymentMethod === 'PAYPAL'} onChange={(e) => setPaymentMethod(e.target.value as 'PAYPAL' | 'WIRE_TRANSFER')} className="mt-1" />
+                      <div>
+                        <p className="text-sm font-semibold text-primary">PayPal</p>
+                        <p className="text-xs text-slate-500">Pay securely using PayPal.</p>
+                      </div>
+                    </label>
+                    <label className={`flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition-all ${paymentMethod === 'WIRE_TRANSFER' ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-primary/30'}`}>
+                      <input type="radio" name="paymentMethod" value="WIRE_TRANSFER" checked={paymentMethod === 'WIRE_TRANSFER'} onChange={(e) => setPaymentMethod(e.target.value as 'PAYPAL' | 'WIRE_TRANSFER')} className="mt-1" />
+                      <div>
+                        <p className="text-sm font-semibold text-primary">Wire Transfer</p>
+                        <p className="text-xs text-slate-500">Recommended for high-value luxury watch purchases.</p>
+                      </div>
+                    </label>
+                  </div>
+                )}
+
+                {/* Errors */}
                 {paypalError && (
                   <div className="mt-4 p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-100 flex items-center gap-2">
                     <AlertCircle className="w-4 h-4 shrink-0" />
                     {paypalError}
                   </div>
                 )}
-                {payPalClientId && isFormValid ? (
+                {paymentMethod === 'PAYPAL' && payPalClientId && isFormValid && (
                   <div className="mt-6">
                     <PayPalScriptProvider
                       options={{ clientId: payPalClientId, currency: 'USD' }}
@@ -370,19 +463,49 @@ export default function CheckoutPage() {
                         onError={() => {
                           setPaypalError('PayPal payment error. Please try again.');
                         }}
-                        onCancel={() => {
-                          setPaypalError('Payment cancelled. You can try again when ready.');
-                        }}
+                        onCancel={() => setPaypalError('Payment cancelled. You can try again when ready.')}
                       />
                     </PayPalScriptProvider>
                   </div>
-                ) : (
-                  <div className="mt-6 p-4 bg-slate-50 border border-slate-200 rounded-xl text-center">
-                    <p className="text-sm text-slate-500">
-                      {isFormValid
-                        ? 'Loading PayPal...'
-                        : 'Please fill in all required shipping details to proceed with PayPal.'}
-                    </p>
+                )}
+
+                {/* Wire Transfer Place Order */}
+                {paymentMethod === 'WIRE_TRANSFER' && isFormValid && (
+                  <div className="mt-6">
+                    {wireError && (
+                      <div className="mb-4 p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-100 flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 shrink-0" />
+                        {wireError}
+                      </div>
+                    )}
+                    <button
+                      onClick={async () => {
+                        setWireError('');
+                        if (!cart?.items?.length) return;
+                        try {
+                          const order = await createOrder.mutateAsync({
+                            ...formData,
+                            paymentMethod: 'WIRE_TRANSFER',
+                            items: cart.items.map((item) => ({
+                              productId: item.product.id,
+                              quantity: item.quantity,
+                            })),
+                          });
+                          setOrderData(order);
+                          setOrderComplete(true);
+                        } catch {
+                          setWireError('Order creation failed. Please try again.');
+                        }
+                      }}
+                      disabled={createOrder.isPending}
+                      className="w-full flex items-center justify-center gap-2 py-4 bg-primary text-white text-sm font-semibold tracking-widest uppercase rounded-xl hover:bg-primary/90 disabled:opacity-60 transition-colors"
+                    >
+                      {createOrder.isPending ? (
+                        <><Loader2 className="w-4 h-4 animate-spin" /> Processing...</>
+                      ) : (
+                        'Place Order'
+                      )}
+                    </button>
                   </div>
                 )}
               </div>

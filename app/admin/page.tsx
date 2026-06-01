@@ -21,7 +21,7 @@ import {
   useDeleteCategory,
   type Category,
 } from '@/hooks/useCategories';
-import { useAllOrders, useUpdateOrderStatus, type Order } from '@/hooks/useOrders';
+import { useAllOrders, useUpdateOrderStatus, useUpdateOrderPaymentStatus, type Order } from '@/hooks/useOrders';
 import {
   useAllInquiries,
   useUpdateInquiryStatus,
@@ -1060,6 +1060,7 @@ function CategoriesTab() {
 function OrdersTab() {
   const { data: orders, isLoading } = useAllOrders();
   const updateOrderStatus = useUpdateOrderStatus();
+  const updatePaymentStatus = useUpdateOrderPaymentStatus();
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
 
   const statusColors: Record<string, string> = {
@@ -1217,26 +1218,49 @@ function OrdersTab() {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <select
-                      value={order.status}
-                      onChange={(e) =>
-                        updateOrderStatus.mutate({
-                          id: order.id,
-                          status: e.target.value as Order['status'],
-                        })
-                      }
-                      className="px-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-primary/40"
-                    >
-                      <option value="PENDING">Pending</option>
-                      <option value="PROCESSING">Processing</option>
-                      <option value="SHIPPED">Shipped</option>
-                      <option value="DELIVERED">Delivered</option>
-                      <option value="CANCELLED">Cancelled</option>
-                    </select>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold uppercase text-slate-500">Order Status:</span>
+                      <select
+                        value={order.status}
+                        onChange={(e) =>
+                          updateOrderStatus.mutate({
+                            id: order.id,
+                            status: e.target.value as Order['status'],
+                          })
+                        }
+                        className="px-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-primary/40"
+                      >
+                        <option value="PENDING">Pending</option>
+                        <option value="PROCESSING">Processing</option>
+                        <option value="SHIPPED">Shipped</option>
+                        <option value="DELIVERED">Delivered</option>
+                        <option value="CANCELLED">Cancelled</option>
+                      </select>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold uppercase text-slate-500">Payment Status:</span>
+                      <select
+                        value={order.paymentStatus || 'PENDING'}
+                        onChange={(e) =>
+                          updatePaymentStatus.mutate({
+                            id: order.id,
+                            paymentStatus: e.target.value as Order['paymentStatus'],
+                          })
+                        }
+                        className="px-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-primary/40"
+                      >
+                        <option value="PENDING">Pending</option>
+                        <option value="AWAITING_TRANSFER">Awaiting Transfer</option>
+                        <option value="PAID">Paid</option>
+                        <option value="FAILED">Failed</option>
+                        <option value="CANCELLED">Cancelled</option>
+                      </select>
+                    </div>
 
                     {order.note && (
-                      <p className="text-sm text-slate-600">Note: {order.note}</p>
+                      <p className="text-sm text-slate-600 ml-auto">Note: {order.note}</p>
                     )}
                   </div>
                 </div>
