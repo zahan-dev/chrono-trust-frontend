@@ -28,3 +28,27 @@ h1, h2, h3, h4, h5, h6 {
 * {
   scroll-behavior: smooth;
 }
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Product description rich content ─────────────────────────── */
+.product-description { color: #475569; line-height: 1.75; }
+.product-description h1,
+.product-description h2 { font-family: var(--font-playfair), Georgia, serif; color: #1e3a5f; font-weight: 500; margin-top: 2rem; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+.product-description h1 { font-size: 1.25rem; }
+.product-description h2 { font-size: 1.1rem; }
+.product-description h3 { font-size: 0.65rem; color: #94a3b8; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+.product-description p { margin-bottom: 1rem; font-weight: 300; }
+.product-description ul, .product-description ol { margin-left: 1.25rem; margin-bottom: 1rem; }
+.product-description li { margin-bottom: 0.375rem; font-weight: 300; }
+.product-description strong { color: #1e293b; font-weight: 600; }
+.product-description a { color: #1e3a5f; text-decoration: none; }
+.product-description a:hover { text-decoration: underline; }
+.product-description table { width: 100%; border-collapse: collapse; border-radius: 0.75rem; overflow: hidden; font-size: 0.875rem; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; }
+.product-description th { background: #f8fafc; color: #1e3a5f; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+.product-description td { padding: 0.65rem 1rem; color: #475569; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+.product-description tr:nth-child(even) td { background: #f8fafc; }
+.product-description tr:last-child td { border-bottom: none; }
+.product-description td:first-child { color: #64748b; font-size: 0.8rem; font-weight: 500; width: 40%; }
+.product-description td:last-child { color: #1e293b; font-weight: 400; }

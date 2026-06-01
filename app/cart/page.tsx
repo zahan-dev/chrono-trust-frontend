@@ -31,8 +31,8 @@ export default function CartPage() {
 
   return (
     <>
-      <main className="min-h-screen bg-[#FAFAFA] pt-20">
-        <div className="bg-primary text-white py-14">
+      <main className="min-h-screen bg-[#FAFAFA]">
+        <div className="bg-primary text-white pt-32 pb-14">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl text-center">
             <p className="text-[11px] tracking-[0.3em] uppercase text-white/60 mb-3">Your Selection</p>
             <h1 className="font-serif text-4xl md:text-5xl font-medium tracking-tight">Shopping Cart</h1>
@@ -48,7 +48,7 @@ export default function CartPage() {
               </div>
             </div>
           ) : !cart?.items?.length ? (
-            <div className="text-center py-24">
+            <div className="text-center py-20 sm:py-24">
               <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Package className="w-10 h-10 text-slate-400" />
               </div>

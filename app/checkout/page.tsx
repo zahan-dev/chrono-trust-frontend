@@ -57,7 +57,7 @@ export default function CheckoutPage() {
   if (orderComplete) {
     return (
       <>
-        <main className="min-h-screen bg-[#FAFAFA] pt-20">
+        <main className="min-h-screen bg-[#FAFAFA] pt-32">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-24">
             <div className="max-w-md mx-auto text-center">
               <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -87,7 +87,7 @@ export default function CheckoutPage() {
   if (!cart?.items?.length) {
     return (
       <>
-        <main className="min-h-screen bg-[#FAFAFA] pt-20">
+        <main className="min-h-screen bg-[#FAFAFA] pt-32">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-24 text-center">
             <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <Package className="w-10 h-10 text-slate-400" />
@@ -107,8 +107,8 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <main className="min-h-screen bg-[#FAFAFA] pt-20">
-        <div className="bg-primary text-white py-14">
+      <main className="min-h-screen bg-[#FAFAFA]">
+        <div className="bg-primary text-white pt-32 pb-14">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <Link
               href="/cart"
