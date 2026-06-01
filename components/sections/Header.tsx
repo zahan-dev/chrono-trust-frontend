@@ -152,7 +152,7 @@ export const Header = () => {
           {/* Center: Logo */}
           <motion.a 
             href="/" 
-            className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center -mt-2 md:-mt-4"
+            className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -161,7 +161,7 @@ export const Header = () => {
               alt="ChronoTrust Logo" 
               width={600} 
               height={180}
-              className={`w-auto object-contain brightness-0 invert transition-all duration-500 ${isScrolled ? 'h-16 md:h-20' : 'h-24 md:h-32'}`}
+              className={`w-auto object-contain brightness-0 invert transition-all duration-500 ${isScrolled ? 'h-14 md:h-16' : 'h-20 md:h-28'}`}
               priority
             />
           </motion.a>
@@ -239,7 +239,7 @@ export const Header = () => {
                           >
                             <span className="text-3xl sm:text-4xl lg:text-5xl font-serif font-medium text-white/70 group-hover/nav:text-white transition-colors">{link.name}</span>
                             {link.subItems && (
-                              <ChevronDown className={`w-8 h-8 opacity-50 transition-transform duration-500 ${activeDropdown === link.name ? 'rotate-180 text-blue-500 opacity-100' : ''}`} />
+                              <ChevronDown className={`w-8 h-8 transition-all duration-500 ${activeDropdown === link.name ? 'rotate-180 text-white opacity-100' : 'opacity-40 text-white/60'}`} />
                             )}
                           </div>
                           {link.subItems && (

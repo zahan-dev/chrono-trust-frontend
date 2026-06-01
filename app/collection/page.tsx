@@ -64,112 +64,107 @@ export default function CollectionPage() {
   return (
     <main className="min-h-screen bg-[#FAFAFA] flex flex-col">
       {/* Cinematic Hero Section */}
-      <section className="relative w-full h-[50vh] min-h-[400px] max-h-[600px] flex items-center justify-center overflow-hidden bg-primary">
+      <section className="relative w-full flex items-center justify-center overflow-hidden bg-primary min-h-[300px] h-[45vh] sm:h-[50vh] max-h-[580px]">
         <div className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1549972574-8e3e1ed6a20d?q=80&w=2000"
             alt="Luxury watches collection"
             fill
-            className="object-cover opacity-40 scale-105 transform hover:scale-100 transition-transform duration-[10s]"
+            className="object-cover opacity-40"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/50 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-primary/90 via-primary/50 to-transparent" />
         </div>
 
-        <div className="relative z-10 container mx-auto px-4 text-center mt-16">
+        <div className="relative z-10 container mx-auto px-6 text-center pt-20 sm:pt-16 pb-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <p className="text-white/60 text-xs tracking-[0.4em] uppercase font-semibold mb-6">
+            <p className="text-white/60 text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase font-semibold mb-3 sm:mb-5">
               Curated Excellence
             </p>
-            <h1 className="font-serif text-5xl md:text-6xl text-white font-medium tracking-tight mb-6 drop-shadow-sm">
-              Explore Our Curated Luxury Timepieces
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-medium tracking-tight mb-3 sm:mb-5 drop-shadow-sm">
+              Our Luxury Collection
             </h1>
-            <div className="w-16 h-[1px] bg-white/30 mx-auto mb-6" />
-            <p className="text-white/80 font-light max-w-4xl mx-auto text-lg">
-              Experience a handpicked selection of the world’s most prestigious watches, chosen for their rarity, craftsmanship, and timeless elegance. Each piece in our collection is verified for authenticity and comes with expert-backed guidance to ensure a secure and confident acquisition.
+            <div className="w-12 h-px bg-white/30 mx-auto mb-3 sm:mb-5" />
+            <p className="text-white/70 font-light max-w-2xl mx-auto text-sm sm:text-base leading-relaxed hidden sm:block">
+              Handpicked luxury timepieces verified for authenticity and condition.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Premium Filter Bar */}
-      <section className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-slate-200/50 shadow-sm transition-all">
+      <section className="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200/50 shadow-sm transition-all">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="py-4 flex flex-col md:flex-row gap-4 items-center justify-between">
+          <div className="py-3 flex flex-row gap-2 items-center justify-between">
             {/* Search Input */}
-            <form onSubmit={handleSearch} className="w-full md:w-auto md:flex-1 max-w-md relative group">
-              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+            <form onSubmit={handleSearch} className="flex-1 min-w-0 relative group">
+              <div className="absolute inset-y-0 left-3 sm:left-4 flex items-center pointer-events-none">
                 <Search className="w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors" />
               </div>
               <input
                 type="text"
-                placeholder="Search by brand, model, or reference..."
+                placeholder="Search brand, model, SKU..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-11 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all placeholder:text-slate-400"
+                className="w-full pl-9 sm:pl-11 pr-8 py-2 sm:py-2.5 bg-slate-50/50 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all placeholder:text-slate-400"
               />
               {search && (
                 <button
                   type="button"
-                  onClick={() => {
-                    setSearch("");
-                    setQ("");
-                    setPage(1);
-                  }}
-                  className="absolute inset-y-0 right-4 flex items-center text-slate-400 hover:text-primary transition-colors"
+                  onClick={() => { setSearch(""); setQ(""); setPage(1); }}
+                  className="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-primary transition-colors"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-3.5 h-3.5" />
                 </button>
               )}
             </form>
 
             {/* Controls */}
-            <div className="flex items-center gap-3 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
-              <div className="flex items-center gap-2 pr-4 md:pr-0 border-r border-slate-200 md:border-none">
-                <span className="text-xs font-medium text-slate-400 uppercase tracking-wider whitespace-nowrap">Sort By</span>
-                <select
-                  value={sortBy}
-                  onChange={(e) => {
-                    setSortBy(e.target.value);
-                    setPage(1);
-                  }}
-                  className="py-2 pl-3 pr-8 bg-transparent text-sm font-medium text-primary focus:outline-none cursor-pointer appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMxMzIzNGIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-[right_8px_center]"
-                >
-                  {SORT_OPTIONS.map((o) => (
-                    <option key={o.value} value={o.value}>
-                      {o.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <select
+                value={sortBy}
+                onChange={(e) => { setSortBy(e.target.value); setPage(1); }}
+                className="hidden sm:block py-2 pl-3 pr-7 bg-slate-50 border border-slate-200 rounded-full text-xs font-medium text-primary focus:outline-none cursor-pointer appearance-none"
+              >
+                {SORT_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
 
-              <div className="flex items-center bg-slate-100/80 rounded-full p-1 ml-auto md:ml-4 flex-shrink-0">
+              <div className="flex items-center bg-slate-100 rounded-full p-1">
                 <button
                   onClick={() => setViewMode("grid")}
-                  className={`p-2 rounded-full transition-all duration-300 ${viewMode === "grid"
-                      ? "bg-white text-primary shadow-sm"
-                      : "text-slate-400 hover:text-primary"
-                    }`}
+                  className={`p-1.5 sm:p-2 rounded-full transition-all duration-300 ${viewMode === "grid" ? "bg-white text-primary shadow-sm" : "text-slate-400 hover:text-primary"}`}
                   aria-label="Grid View"
                 >
-                  <LayoutGrid className="w-4 h-4" />
+                  <LayoutGrid className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
                 <button
                   onClick={() => setViewMode("compact")}
-                  className={`p-2 rounded-full transition-all duration-300 ${viewMode === "compact"
-                      ? "bg-white text-primary shadow-sm"
-                      : "text-slate-400 hover:text-primary"
-                    }`}
+                  className={`p-1.5 sm:p-2 rounded-full transition-all duration-300 ${viewMode === "compact" ? "bg-white text-primary shadow-sm" : "text-slate-400 hover:text-primary"}`}
                   aria-label="Compact View"
                 >
-                  <Grid3X3 className="w-4 h-4" />
+                  <Grid3X3 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
               </div>
             </div>
+          </div>
+
+          {/* Mobile sort row */}
+          <div className="flex sm:hidden items-center gap-2 pb-2 overflow-x-auto hide-scrollbar">
+            {SORT_OPTIONS.map((o) => (
+              <button
+                key={o.value}
+                onClick={() => { setSortBy(o.value); setPage(1); }}
+                className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${sortBy === o.value ? 'bg-primary text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+              >
+                {o.label}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -282,7 +277,7 @@ export default function CollectionPage() {
             </motion.div>
           ) : (
             <div
-              className={`grid gap-x-6 gap-y-10 ${viewMode === "grid"
+              className={`grid gap-x-4 sm:gap-x-6 gap-y-8 sm:gap-y-10 ${viewMode === "grid"
                   ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
                   : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
                 }`}

@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { Providers } from "@/lib/providers";
 import "./globals.css";
-import { Header } from "@/components/sections/Header";
-import { Footer } from "@/components/sections/Footer";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { RootLayoutShell } from "@/components/RootLayoutShell";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -68,10 +66,9 @@ export default function RootLayout({
       className={`${inter.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white">
-        <Header />
-        <Providers>{children}</Providers>
-        <Footer />
-        <FloatingWhatsApp />
+        <Providers>
+          <RootLayoutShell>{children}</RootLayoutShell>
+        </Providers>
       </body>
     </html>
   );
