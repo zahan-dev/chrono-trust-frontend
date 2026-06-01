@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { Header } from '@/components/sections/Header';
 import { Footer } from '@/components/sections/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
+import { FloatingCart } from '@/components/FloatingCart';
 
 export function RootLayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -19,6 +20,7 @@ export function RootLayoutShell({ children }: { children: React.ReactNode }) {
       {children}
       <Footer />
       <FloatingWhatsApp />
+      <FloatingCart />
     </>
   );
 }

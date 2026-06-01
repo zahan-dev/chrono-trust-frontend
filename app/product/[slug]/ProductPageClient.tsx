@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRelatedProducts } from '@/hooks/useProducts';
 import { useAddToCart } from '@/hooks/useCart';
-import { useAuth } from '@/hooks/useAuth';
 import { useCreateInquiry } from '@/hooks/useInquiries';
 import { ProductCard } from '@/components/ProductCard';
 import {
@@ -22,7 +21,6 @@ interface ProductPageClientProps {
 
 export function ProductPageClient({ product }: ProductPageClientProps) {
   const { data: related } = useRelatedProducts(product.slug);
-  const { isLoggedIn } = useAuth();
   const addToCart = useAddToCart();
   const createInquiry = useCreateInquiry();
 
@@ -108,21 +106,39 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
 
         {/* ─── Main product section ────────────────────────────────────── */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-6 sm:py-10">
-          <div className="grid lg:grid-cols-12 gap-6 lg:gap-10">
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
 
-            {/* ── LEFT: Gallery ──────────────────────────────────────────── */}
-            <div className="lg:col-span-6 xl:col-span-7">
-              {/* Main image */}
+            {/* DESKTOP: Vertical Thumbnails (left) */}
+            {images.length > 1 && (
+              <div className="hidden lg:flex flex-col gap-2 w-16 shrink-0 max-h-160 overflow-y-auto scrollbar-hide pr-0.5">
+                {images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveImage(idx)}
+                    className={`relative w-full aspect-square rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                      activeImage === idx
+                        ? 'border-primary shadow-[0_0_0_3px_rgba(19,35,75,0.12)]'
+                        : 'border-transparent hover:border-slate-300 opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <Image src={img} alt={`View ${idx + 1}`} fill className="object-cover" sizes="80px" />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Main Image + Mobile Thumbs */}
+            <div className="flex-1 min-w-0">
               <div className="relative bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm group">
-                <div className="relative aspect-square sm:aspect-[4/3] lg:aspect-square">
+                <div className="relative aspect-square sm:aspect-[4/3] lg:aspect-square cursor-zoom-in">
                   {images[activeImage] ? (
                     <Image
                       src={images[activeImage]}
                       alt={product.title}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                       priority
-                      sizes="(max-width: 1024px) 100vw, 55vw"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center bg-slate-50">
@@ -130,7 +146,6 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                       <p className="text-xs text-slate-400">No image available</p>
                     </div>
                   )}
-                  {/* Sold overlay */}
                   {!product.inStock && (
                     <div className="absolute inset-0 bg-white/75 flex items-center justify-center backdrop-blur-[2px]">
                       <span className="text-sm font-bold tracking-[0.25em] uppercase text-slate-500 border-2 border-slate-300 px-10 py-3 rounded-full bg-white/90 shadow">
@@ -138,13 +153,6 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                       </span>
                     </div>
                   )}
-                  {/* Zoom hint */}
-                  {images[activeImage] && (
-                    <div className="absolute bottom-4 right-4 bg-black/30 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                      <ZoomIn className="w-4 h-4 text-white" />
-                    </div>
-                  )}
-                  {/* Image counter */}
                   {images.length > 1 && (
                     <div className="absolute top-4 right-4 bg-black/30 backdrop-blur-sm rounded-full px-3 py-1">
                       <span className="text-white text-xs font-medium">{activeImage + 1} / {images.length}</span>
@@ -153,17 +161,17 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                 </div>
               </div>
 
-              {/* Thumbnails */}
+              {/* MOBILE: Horizontal Thumbnails */}
               {images.length > 1 && (
-                <div className="flex gap-2.5 sm:gap-3 mt-3 overflow-x-auto pb-1 scrollbar-hide">
+                <div className="flex gap-2.5 mt-3 overflow-x-auto pb-1 scrollbar-hide lg:hidden">
                   {images.map((img, idx) => (
                     <button
                       key={idx}
                       onClick={() => setActiveImage(idx)}
-                      className={`relative shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 ${
+                      className={`relative shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all duration-200 ${
                         activeImage === idx
                           ? 'border-primary shadow-[0_0_0_3px_rgba(19,35,75,0.12)]'
-                          : 'border-transparent hover:border-slate-300 opacity-70 hover:opacity-100'
+                          : 'border-transparent hover:border-slate-300 opacity-60 hover:opacity-100'
                       }`}
                     >
                       <Image src={img} alt={`View ${idx + 1}`} fill className="object-cover" sizes="80px" />
@@ -173,8 +181,8 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
               )}
             </div>
 
-            {/* ── RIGHT: Details Panel ───────────────────────────────────── */}
-            <div className="lg:col-span-6 xl:col-span-5">
+            {/* Product Info Panel */}
+            <div className="w-full lg:w-96 xl:w-105 shrink-0">
               <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 sm:p-8 lg:sticky lg:top-24">
 
                 {/* Brand + category pills */}
@@ -229,7 +237,7 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                     </>
                   ) : (
                     <div className="bg-slate-50 border border-slate-100 rounded-xl px-5 py-4">
-                      <p className="text-sm font-semibold text-primary">Price on Request</p>
+                      <p className="text-sm font-semibold text-primary">Price Upon Request</p>
                       <p className="text-xs text-slate-500 mt-0.5">Contact us for exclusive pricing</p>
                     </div>
                   )}
@@ -245,40 +253,46 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
 
                 {/* CTAs */}
                 <div className="space-y-3 mb-6">
-                  <a
-                    href={`https://wa.me/17328329938?text=${whatsappMsg}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2.5 py-4 bg-primary text-white text-xs font-bold tracking-[0.15em] uppercase rounded-xl hover:bg-primary/90 transition-all shadow-[0_4px_16px_rgba(19,35,75,0.22)] hover:shadow-[0_6px_22px_rgba(19,35,75,0.30)]"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    Inquire via WhatsApp
-                  </a>
+                  {product.price ? (
+                    /* Priced product: Add to Cart only */
+                    product.inStock && (
+                      <button
+                        onClick={handleAddToCart}
+                        disabled={addToCart.isPending || addedToCart}
+                        className={`w-full flex items-center justify-center gap-2.5 py-4 text-xs font-bold tracking-[0.15em] uppercase rounded-xl transition-all ${
+                          addedToCart
+                            ? 'bg-green-500 text-white'
+                            : 'bg-primary text-white hover:bg-primary/90 shadow-[0_4px_16px_rgba(19,35,75,0.22)] hover:shadow-[0_6px_22px_rgba(19,35,75,0.30)]'
+                        } disabled:opacity-60`}
+                      >
+                        {addedToCart ? (
+                          <><CheckCircle className="w-4 h-4" /> Added to Cart</>
+                        ) : (
+                          <><ShoppingBag className="w-4 h-4" /> Add to Cart</>
+                        )}
+                      </button>
+                    )
+                  ) : (
+                    /* Unpriced product: Inquiry options */
+                    <>
+                      <a
+                        href={`https://wa.me/17328329938?text=${whatsappMsg}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2.5 py-4 bg-primary text-white text-xs font-bold tracking-[0.15em] uppercase rounded-xl hover:bg-primary/90 transition-all shadow-[0_4px_16px_rgba(19,35,75,0.22)] hover:shadow-[0_6px_22px_rgba(19,35,75,0.30)]"
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        Inquire Now
+                      </a>
 
-                  {product.inStock && isLoggedIn && (
-                    <button
-                      onClick={handleAddToCart}
-                      disabled={addToCart.isPending || addedToCart}
-                      className={`w-full flex items-center justify-center gap-2.5 py-4 border-2 text-xs font-bold tracking-[0.15em] uppercase rounded-xl transition-all ${
-                        addedToCart
-                          ? 'border-green-500 text-green-600 bg-green-50'
-                          : 'border-primary text-primary hover:bg-primary/5'
-                      } disabled:opacity-60`}
-                    >
-                      {addedToCart ? (
-                        <><CheckCircle className="w-4 h-4" /> Added to Cart</>
-                      ) : (
-                        <><ShoppingBag className="w-4 h-4" /> Add to Cart</>
-                      )}
-                    </button>
+                      <button
+                        onClick={() => setShowInquiryForm(!showInquiryForm)}
+                        className="w-full py-3 text-xs text-slate-500 hover:text-primary transition-colors border border-slate-200 hover:border-primary/30 rounded-xl"
+                      >
+                        {showInquiryForm ? 'Hide Form' : 'Send Email Inquiry'}
+                      </button>
+                    </>
                   )}
-
-                  <button
-                    onClick={() => setShowInquiryForm(!showInquiryForm)}
-                    className="w-full py-3 text-xs text-slate-500 hover:text-primary transition-colors border border-slate-200 hover:border-primary/30 rounded-xl"
-                  >
-                    {showInquiryForm ? 'Hide Form' : 'Send Email Inquiry'}
-                  </button>
                 </div>
 
                 {/* Email Inquiry Form */}

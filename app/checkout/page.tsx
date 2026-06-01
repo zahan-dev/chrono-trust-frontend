@@ -1,17 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useCart } from '@/hooks/useCart';
-import { useCreateOrder } from '@/hooks/useOrders';
-import { Package, ArrowLeft, CheckCircle, Loader2 } from 'lucide-react';
+import { useCreatePayPalOrder, useCapturePayPalOrder, type Order } from '@/hooks/useOrders';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import api from '@/lib/axios';
+import { Package, ArrowLeft, CheckCircle, Loader2, AlertCircle } from 'lucide-react';
 
 export default function CheckoutPage() {
-  const router = useRouter();
   const { data: cart } = useCart();
-  const createOrder = useCreateOrder();
+  const createPayPalOrder = useCreatePayPalOrder();
+  const capturePayPalOrder = useCapturePayPalOrder();
 
   const [formData, setFormData] = useState({
     customerName: '',
@@ -23,36 +24,33 @@ export default function CheckoutPage() {
     postalCode: '',
     country: 'USA',
     note: '',
-    paymentMethod: 'wire',
   });
 
   const [orderComplete, setOrderComplete] = useState(false);
-  const [orderNumber, setOrderNumber] = useState('');
+  const [orderData, setOrderData] = useState<Order | null>(null);
+  const [paypalError, setPaypalError] = useState('');
+  const [payPalClientId, setPayPalClientId] = useState('');
+
+  useEffect(() => {
+    api.get('/payments/paypal/client-id')
+      .then((res) => setPayPalClientId(res.data.clientId))
+      .catch(() => setPayPalClientId(''));
+  }, []);
 
   const subtotal = cart?.items?.reduce((sum, item) => {
     const price = item.product.price || 0;
     return sum + price * item.quantity;
   }, 0) || 0;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!cart?.items?.length) return;
-
-    try {
-      const order = await createOrder.mutateAsync({
-        ...formData,
-        items: cart.items.map((item) => ({
-          productId: item.product.id,
-          quantity: item.quantity,
-        })),
-      });
-
-      setOrderNumber(order.orderNumber);
-      setOrderComplete(true);
-    } catch (error) {
-      console.error('Order creation failed:', error);
-    }
-  };
+  const isFormValid =
+    formData.customerName &&
+    formData.customerEmail &&
+    formData.customerPhone &&
+    formData.address &&
+    formData.city &&
+    formData.state &&
+    formData.postalCode &&
+    formData.country;
 
   if (orderComplete) {
     return (
@@ -65,11 +63,14 @@ export default function CheckoutPage() {
               </div>
               <h1 className="font-serif text-3xl text-primary mb-4">Order Confirmed</h1>
               <p className="text-slate-600 mb-2">Thank you for your order!</p>
-              <p className="text-sm text-slate-500 mb-8">
-                Order Number: <span className="font-medium text-primary">{orderNumber}</span>
+              <p className="text-sm text-slate-500 mb-2">
+                Order Number: <span className="font-medium text-primary">{orderData?.orderNumber}</span>
+              </p>
+              <p className="text-sm text-slate-500 mb-2">
+                Payment: <span className="font-medium text-green-600">{orderData?.paymentStatus}</span>
               </p>
               <p className="text-sm text-slate-500 mb-8">
-                We will contact you shortly to arrange payment and delivery.
+                Total: <span className="font-medium text-primary">${orderData?.total?.toLocaleString()}</span>
               </p>
               <Link
                 href="/collection"
@@ -121,7 +122,7 @@ export default function CheckoutPage() {
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10">
-          <form onSubmit={handleSubmit} className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-8">
             {/* Customer Information */}
             <div className="lg:col-span-2 space-y-6">
               <div className="bg-white border border-slate-100 rounded-xl p-6">
@@ -317,27 +318,76 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                {/* Submit */}
-                <button
-                  type="submit"
-                  disabled={createOrder.isPending}
-                  className="w-full mt-6 flex items-center justify-center gap-2 py-4 bg-primary text-white text-sm font-semibold tracking-widest uppercase rounded-xl hover:bg-primary/90 disabled:opacity-60 transition-colors"
-                >
-                  {createOrder.isPending ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" /> Processing...
-                    </>
-                  ) : (
-                    'Place Order'
-                  )}
-                </button>
-
-                <p className="text-xs text-slate-400 text-center mt-4">
-                  We will contact you for payment arrangement
-                </p>
+                {/* PayPal */}
+                {paypalError && (
+                  <div className="mt-4 p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-100 flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    {paypalError}
+                  </div>
+                )}
+                {payPalClientId && isFormValid ? (
+                  <div className="mt-6">
+                    <PayPalScriptProvider
+                      options={{ clientId: payPalClientId, currency: 'USD' }}
+                    >
+                      <PayPalButtons
+                        style={{ layout: 'vertical', color: 'gold', shape: 'rect' }}
+                        createOrder={async () => {
+                          setPaypalError('');
+                          const items = cart!.items.map((item) => ({
+                            productId: item.product.id,
+                            quantity: item.quantity,
+                          }));
+                          const paypalOrder = await createPayPalOrder.mutateAsync(items);
+                          return paypalOrder.id;
+                        }}
+                        onApprove={async (data) => {
+                          try {
+                            const res = await capturePayPalOrder.mutateAsync({
+                              orderId: data.orderID,
+                              dto: {
+                                customerName: formData.customerName,
+                                customerEmail: formData.customerEmail,
+                                customerPhone: formData.customerPhone,
+                                address: formData.address,
+                                city: formData.city,
+                                state: formData.state,
+                                postalCode: formData.postalCode,
+                                country: formData.country,
+                                note: formData.note,
+                                items: cart!.items.map((item) => ({
+                                  productId: item.product.id,
+                                  quantity: item.quantity,
+                                })),
+                              },
+                            });
+                            setOrderData(res.order);
+                            setOrderComplete(true);
+                          } catch {
+                            setPaypalError('Payment capture failed. Please try again or contact support.');
+                          }
+                        }}
+                        onError={() => {
+                          setPaypalError('PayPal payment error. Please try again.');
+                        }}
+                        onCancel={() => {
+                          setPaypalError('Payment cancelled. You can try again when ready.');
+                        }}
+                      />
+                    </PayPalScriptProvider>
+                  </div>
+                ) : (
+                  <div className="mt-6 p-4 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                    <p className="text-sm text-slate-500">
+                      {isFormValid
+                        ? 'Loading PayPal...'
+                        : 'Please fill in all required shipping details to proceed with PayPal.'}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
-          </form>
+          </div>
         </div>
       </main>
     </>

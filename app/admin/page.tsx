@@ -1070,6 +1070,13 @@ function OrdersTab() {
     CANCELLED: 'bg-red-100 text-red-600',
   };
 
+  const paymentStatusColors: Record<string, string> = {
+    PENDING: 'bg-yellow-100 text-yellow-600',
+    PAID: 'bg-green-100 text-green-600',
+    FAILED: 'bg-red-100 text-red-600',
+    REFUNDED: 'bg-slate-100 text-slate-600',
+  };
+
   return (
     <div>
       <h2 className="font-serif text-2xl text-primary mb-6">Orders</h2>
@@ -1105,6 +1112,20 @@ function OrdersTab() {
                   >
                     {order.status}
                   </span>
+                  {order.paymentMethod && (
+                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">
+                      {order.paymentMethod}
+                    </span>
+                  )}
+                  {order.paymentStatus && (
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                        paymentStatusColors[order.paymentStatus]
+                      }`}
+                    >
+                      {order.paymentStatus}
+                    </span>
+                  )}
                 </div>
                 <div className="flex items-center gap-4">
                   <p className="font-medium text-primary">
@@ -1120,7 +1141,7 @@ function OrdersTab() {
 
               {expandedOrder === order.id && (
                 <div className="border-t border-slate-100 p-4 bg-slate-50">
-                  <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div className="grid md:grid-cols-3 gap-4 mb-4">
                     <div>
                       <p className="text-xs font-semibold uppercase text-slate-500 mb-1">
                         Customer
@@ -1138,6 +1159,22 @@ function OrdersTab() {
                         {order.city}, {order.state} {order.postalCode}
                       </p>
                       <p className="text-sm text-slate-600">{order.country}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase text-slate-500 mb-1">
+                        Payment Details
+                      </p>
+                      <p className="text-sm text-slate-600">
+                        Method: <span className="font-medium text-primary">{order.paymentMethod || '-'}</span>
+                      </p>
+                      <p className="text-sm text-slate-600">
+                        Status: <span className="font-medium text-primary">{order.paymentStatus || '-'}</span>
+                      </p>
+                      {order.paypalTransactionId && (
+                        <p className="text-sm text-slate-600 break-all">
+                          PayPal Txn: <span className="font-mono text-xs">{order.paypalTransactionId}</span>
+                        </p>
+                      )}
                     </div>
                   </div>
 

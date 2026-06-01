@@ -23,6 +23,10 @@ export interface Order {
   country: string;
   note?: string;
   paymentMethod?: string;
+  paymentStatus?: 'PENDING' | 'PAID' | 'FAILED' | 'REFUNDED';
+  paypalOrderId?: string;
+  paypalCaptureId?: string;
+  paypalTransactionId?: string;
   status: 'PENDING' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
   total: number;
   items: OrderItem[];
@@ -85,6 +89,43 @@ export function useUpdateOrderStatus() {
       return data;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin-orders'] }),
+  });
+}
+
+export function useCreatePayPalOrder() {
+  return useMutation({
+    mutationFn: async (items: { productId: string; quantity: number }[]) => {
+      const { data } = await api.post('/payments/paypal/create-order', { items });
+      return data as { id: string };
+    },
+  });
+}
+
+export interface CapturePayPalOrderDto {
+  customerName: string;
+  customerEmail: string;
+  customerPhone?: string;
+  address: string;
+  city: string;
+  state?: string;
+  postalCode: string;
+  country: string;
+  note?: string;
+  items: { productId: string; quantity: number }[];
+}
+
+export function useCapturePayPalOrder() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ orderId, dto }: { orderId: string; dto: CapturePayPalOrderDto }) => {
+      const { data } = await api.post(`/payments/paypal/capture/${orderId}`, dto);
+      return data as { order: Order };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      queryClient.invalidateQueries({ queryKey: ['my-orders'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-orders'] });
+    },
   });
 }
 

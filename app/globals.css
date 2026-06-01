@@ -34,21 +34,111 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ── Product description rich content ─────────────────────────── */
 .product-description { color: #475569; line-height: 1.75; }
+
+/* Section headings */  
 .product-description h1,
-.product-description h2 { font-family: var(--font-playfair), Georgia, serif; color: #1e3a5f; font-weight: 500; margin-top: 2rem; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; }
-.product-description h1 { font-size: 1.25rem; }
-.product-description h2 { font-size: 1.1rem; }
-.product-description h3 { font-size: 0.65rem; color: #94a3b8; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+.product-description h2 {
+  font-family: var(--font-playfair), Georgia, serif;
+  color: #1e3a5f;
+  font-weight: 500;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+}
+.product-description h1:first-child,
+.product-description h2:first-child { margin-top: 0; }
+
+.product-description h3 {
+  font-size: 0.6rem;
+  color: #94a3b8;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
 .product-description p { margin-bottom: 1rem; font-weight: 300; }
 .product-description ul, .product-description ol { margin-left: 1.25rem; margin-bottom: 1rem; }
 .product-description li { margin-bottom: 0.375rem; font-weight: 300; }
 .product-description strong { color: #1e293b; font-weight: 600; }
 .product-description a { color: #1e3a5f; text-decoration: none; }
 .product-description a:hover { text-decoration: underline; }
-.product-description table { width: 100%; border-collapse: collapse; border-radius: 0.75rem; overflow: hidden; font-size: 0.875rem; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; }
-.product-description th { background: #f8fafc; color: #1e3a5f; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
-.product-description td { padding: 0.65rem 1rem; color: #475569; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
-.product-description tr:nth-child(even) td { background: #f8fafc; }
-.product-description tr:last-child td { border-bottom: none; }
-.product-description td:first-child { color: #64748b; font-size: 0.8rem; font-weight: 500; width: 40%; }
-.product-description td:last-child { color: #1e293b; font-weight: 400; }
+
+/* ── Premium specification tables ─────────────────────────────── */
+.product-description table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.8125rem;
+  margin-bottom: 2rem;
+  border: 1px solid #e8ecf1;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.product-description thead tr { background: #f8fafc; }
+.product-description th {
+  background: #f1f5f9;
+  color: #1e3a5f;
+  font-weight: 600;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.875rem 1.25rem;
+  text-align: left;
+  border-bottom: 1.5px solid #e2e8f0;
+}
+
+.product-description td {
+  padding: 0.875rem 1.25rem;
+  color: #475569;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  line-height: 1.5;
+}
+
+/* Alternating row backgrounds */
+.product-description tbody tr:nth-child(even) { background: #fafbfd; }
+.product-description tbody tr:nth-child(odd) { background: #ffffff; }
+.product-description tbody tr:hover { background: #f4f7fb; }
+.product-description tbody tr:last-child td { border-bottom: none; }
+
+/* Label / Value columns */
+.product-description td:first-child {
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 600;
+  width: 42%;
+  letter-spacing: 0.02em;
+}
+.product-description td:last-child {
+  color: #1e293b;
+  font-weight: 400;
+}
+
+/* Responsive: horizontal scroll on small screens */
+@media (max-width: 640px) {
+  .product-description table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+  .product-description td:first-child {
+    width: auto;
+    min-width: 140px;
+  }
+}
+
+/* ── Floating cart entrance animation ─────────────────────────── */
+@keyframes cart-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
