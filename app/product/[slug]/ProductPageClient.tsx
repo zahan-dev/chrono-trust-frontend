@@ -28,7 +28,15 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
   const [activeImage, setActiveImage] = useState(0);
   const [addedToCart, setAddedToCart] = useState(false);
   const [showInquiryForm, setShowInquiryForm] = useState(false);
-  const [inquiryData, setInquiryData] = useState({ name: '', email: '', phone: '', message: '' });
+  const defaultMessage = [
+    `I am interested in: ${product.title}`,
+    product.brand ? `Brand: ${product.brand}` : null,
+    product.model ? `Model: ${product.model}` : null,
+    product.sku ? `Reference: ${product.sku}` : null,
+    ``,
+    `Please provide more information on availability and pricing.`,
+  ].filter(Boolean).join('\n');
+  const [inquiryData, setInquiryData] = useState({ name: '', email: '', phone: '', message: defaultMessage });
   const [inquirySent, setInquirySent] = useState(false);
 
   const handleAddToCart = async () => {
@@ -44,9 +52,24 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
     setShowInquiryForm(false);
   };
 
-  const whatsappMsg = encodeURIComponent(
-    `Hi, I'm interested in: ${product.title}${product.sku ? ` (Ref: ${product.sku})` : ''}`
-  );
+  const productUrl = `https://chronotrust.io/product/${product.slug}`;
+  const inquiryLines = [
+    `Hello ChronoTrust,`,
+    ``,
+    `I am interested in the following timepiece:`,
+    ``,
+    `Product: ${product.title}`,
+    product.brand ? `Brand: ${product.brand}` : null,
+    product.model ? `Model: ${product.model}` : null,
+    product.sku ? `Reference: ${product.sku}` : null,
+    product.price ? `Price: $${product.price.toLocaleString()}` : null,
+    `URL: ${productUrl}`,
+    ``,
+    `I would appreciate more information regarding availability, condition, and purchasing options.`,
+    ``,
+    `Thank you.`,
+  ].filter(Boolean).join('\n');
+  const whatsappMsg = encodeURIComponent(inquiryLines);
 
   const images = product.images?.length > 0 ? product.images : [];
 

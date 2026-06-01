@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ProductCard } from "@/components/ProductCard";
 import { PageSkeleton } from "@/components/SkeletonCard";
 import { useProducts } from "@/hooks/useProducts";
 import { useCategories } from "@/hooks/useCategories";
-import { Search, SlidersHorizontal, ChevronLeft, ChevronRight, X, Grid3X3, LayoutGrid } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, X, Grid3X3, LayoutGrid } from "lucide-react";
 
 const SORT_OPTIONS = [
   { value: "newest", label: "Newest Arrivals" },
@@ -36,6 +36,14 @@ export default function CollectionPage() {
   const { data: categories } = useCategories();
 
   const totalPages = data ? Math.ceil(data.total / LIMIT) : 1;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setQ(search);
+      setPage(1);
+    }, 350);
+    return () => clearTimeout(timer);
+  }, [search]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

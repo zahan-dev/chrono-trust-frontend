@@ -53,10 +53,13 @@ export function useProducts(filters: ProductFilters = {}) {
   if (filters.featured !== undefined) params.set('featured', String(filters.featured));
   if (filters.sortBy) params.set('sortBy', filters.sortBy);
 
+  const useSearch = !!(filters.q || filters.categorySlug || filters.sortBy || filters.minPrice !== undefined || filters.maxPrice !== undefined || filters.featured !== undefined);
+  const endpoint = useSearch ? `/products/search` : `/products`;
+
   return useQuery<ProductsResponse>({
     queryKey: ['products', filters],
     queryFn: async () => {
-      const { data } = await api.get(`/products?${params.toString()}`);
+      const { data } = await api.get(`${endpoint}?${params.toString()}`);
       return data;
     },
   });
@@ -87,7 +90,7 @@ export function useRelatedProducts(slug: string) {
   return useQuery<Product[]>({
     queryKey: ['products', 'related', slug],
     queryFn: async () => {
-      const { data } = await api.get(`/products/slug/${slug}/related`);
+      const { data } = await api.get(`/products/${slug}/related`);
       return data;
     },
     enabled: !!slug,

@@ -5,62 +5,15 @@ import Image from 'next/image';
 import { Button } from '../ui/Button';
 import { ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useProducts } from '@/hooks/useProducts';
 
 export const NewArrivals = () => {
-  const whatsappNumber = '+17328329938';
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const arrivals = [
-    {
-      brand: 'Rolex',
-      model: 'Sea-Dweller Deepsea',
-      ref: '136660',
-      image: '/rolex-1.jpg',
-    },
-    {
-      brand: 'Audemars Piguet',
-      model: 'Royal Oak Chronograph',
-      ref: '26240OR',
-      image: '/Audemars Piguet 1.jpg',
-    },
-    {
-      brand: 'Patek Philippe',
-      model: 'Nautilus Chronograph',
-      ref: '5980/1R',
-      image: '/Patek Philippe 1.webp',
-    },
-    {
-      brand: 'Omega',
-      model: 'Seamaster Diver 300M',
-      ref: '210.30.42.20.03.001',
-      image: '/Omega 2.webp',
-    },
-    {
-      brand: 'Cartier',
-      model: 'Tank Must Diamond',
-      ref: 'WJTA0023',
-      image: '/Cartier 1.webp',
-    },
-    {
-      brand: 'Rolex',
-      model: 'Deepsea Sea-Dweller',
-      ref: '126660',
-      image: '/rolex-2.webp',
-    },
-    {
-      brand: 'IWC',
-      model: 'Portugieser Perpetual',
-      ref: 'IW503302',
-      image: '/IWC 1.webp',
-    },
-    {
-      brand: 'Patek Philippe',
-      model: 'Nautilus Sport',
-      ref: '5990/1A',
-      image: '/Patek Philippe 2.webp',
-    },
-  ];
+  const { data: productsData, isLoading } = useProducts({ limit: 8, sortBy: 'newest' });
+  const arrivals = productsData?.data ?? [];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -186,8 +139,15 @@ export const NewArrivals = () => {
           </motion.div>
         </div>
 
+        {/* Empty state */}
+        {!isLoading && arrivals.length === 0 && (
+          <div className="text-center py-24 bg-white rounded-2xl border border-slate-100">
+            <p className="text-slate-400 font-light text-lg">No new arrivals yet.</p>
+          </div>
+        )}
+
         {/* Grid / Slider */}
-        <motion.div
+        {arrivals.length > 0 && <motion.div
           ref={scrollRef}
           onScroll={handleScroll}
           variants={containerVariants}
@@ -198,7 +158,7 @@ export const NewArrivals = () => {
         >
           {arrivals.map((watch, index) => (
             <motion.div
-              key={index}
+              key={watch.id}
               variants={itemVariants}
               className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 cursor-pointer w-[80vw] sm:w-[45vw] md:w-[calc(50%-12px)] lg:w-[calc(25%-24px)] shrink-0 snap-start"
               style={{
@@ -216,56 +176,56 @@ export const NewArrivals = () => {
                 (e.currentTarget as HTMLElement).style.transform =
                   'translateY(0)';
               }}
-              onClick={() =>
-                window.open(
-                  `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
-                    `I'm inquiring about the ${watch.brand} ${watch.model} (Ref. ${watch.ref}) from New Arrivals.`
-                  )}`
-                )
-              }
             >
-              {/* Image */}
-              <div className="relative w-full overflow-hidden bg-[#f0f0f0]" style={{ aspectRatio: '4/5' }}>
-                <Image
-                  src={watch.image}
-                  alt={`${watch.brand} ${watch.model}`}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
-                  className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
-                  priority={index < 4}
-                />
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                  style={{
-                    background:
-                      'linear-gradient(to top, rgba(19,35,75,0.12) 0%, transparent 60%)',
-                  }}
-                />
-              </div>
-
-              {/* Info */}
-              <div className="flex flex-col flex-1 px-6 py-6 text-center">
-                <span className="text-silver text-[10px] tracking-[0.35em] uppercase mb-2 font-semibold">
-                  {watch.brand}
-                </span>
-                <h3 className="text-lg lg:text-xl font-serif font-medium text-primary mb-1 line-clamp-1">
-                  {watch.model}
-                </h3>
-                {watch.ref && (
-                  <span className="text-[10px] tracking-[0.18em] text-primary/35 uppercase font-medium mb-4">
-                    Ref. {watch.ref}
-                  </span>
-                )}
-                <div className="mt-auto flex items-center justify-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-primary/50 group-hover:text-primary transition-colors duration-300">
-                  Inquire Now
-                  <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" />
+              <Link href={`/product/${watch.slug}`} className="flex flex-col flex-1">
+                {/* Image */}
+                <div className="relative w-full overflow-hidden bg-[#f0f0f0]" style={{ aspectRatio: '4/5' }}>
+                  {watch.images?.[0] ? (
+                    <Image
+                      src={watch.images[0]}
+                      alt={`${watch.brand ?? ''} ${watch.model ?? watch.title}`}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                      className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
+                      priority={index < 4}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-slate-100">
+                      <span className="text-slate-300 text-xs uppercase tracking-widest">No Image</span>
+                    </div>
+                  )}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                    style={{ background: 'linear-gradient(to top, rgba(19,35,75,0.12) 0%, transparent 60%)' }}
+                  />
                 </div>
-              </div>
+
+                {/* Info */}
+                <div className="flex flex-col flex-1 px-6 py-6 text-center">
+                  {watch.brand && (
+                    <span className="text-silver text-[10px] tracking-[0.35em] uppercase mb-2 font-semibold">
+                      {watch.brand}
+                    </span>
+                  )}
+                  <h3 className="text-lg lg:text-xl font-serif font-medium text-primary mb-1 line-clamp-1">
+                    {watch.model ?? watch.title}
+                  </h3>
+                  {watch.sku && (
+                    <span className="text-[10px] tracking-[0.18em] text-primary/35 uppercase font-medium mb-4">
+                      Ref. {watch.sku}
+                    </span>
+                  )}
+                  <div className="mt-auto flex items-center justify-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-primary/50 group-hover:text-primary transition-colors duration-300">
+                    View Product
+                    <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
+                </div>
+              </Link>
             </motion.div>
           ))}
           {/* Mobile Spacer */}
           <div className="w-4 shrink-0 md:hidden" aria-hidden="true" />
-        </motion.div>
+        </motion.div>}
 
         {/* Slider Dots */}
         <div className="flex items-center justify-center gap-2 mt-4 md:mt-8">

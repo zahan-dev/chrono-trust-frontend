@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { MessageCircle, Package } from 'lucide-react';
+import { Package, ArrowRight } from 'lucide-react';
 import type { Product } from '@/hooks/useProducts';
 
 interface ProductCardProps {
@@ -11,11 +11,8 @@ interface ProductCardProps {
   compact?: boolean;
 }
 
-export function ProductCard({ product, onInquire, compact }: ProductCardProps) {
+export function ProductCard({ product, compact }: ProductCardProps) {
   const image = product.images?.[0];
-  const whatsappMsg = encodeURIComponent(
-    `Hi, I'm interested in: ${product.title}${product.sku ? ` (Ref: ${product.sku})` : ''}`
-  );
 
   return (
     <div className={`group bg-white border border-slate-100 rounded-xl overflow-hidden hover:shadow-[0_20px_60px_rgba(30,58,95,0.1)] hover:-translate-y-1 transition-all duration-500 ${compact ? 'scale-[0.98]' : ''}`}>
@@ -68,28 +65,14 @@ export function ProductCard({ product, onInquire, compact }: ProductCardProps) {
           <p className="text-[11px] text-slate-400 mb-3">Ref. {product.sku}</p>
         )}
 
-        <div className={`flex items-center justify-between gap-2 mt-3 pt-3 border-t border-slate-100 ${compact ? 'flex-col items-stretch gap-2' : ''}`}>
-          {!compact && (
-            <Link
-              href={`/product/${product.slug}`}
-              className="text-[11px] font-semibold tracking-widest uppercase text-primary hover:text-primary/70 transition-colors"
-            >
-              View Details
-            </Link>
-          )}
-          <a
-            href={`https://wa.me/17328329938?text=${whatsappMsg}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`flex items-center justify-center gap-1.5 font-semibold tracking-wider uppercase bg-primary text-white rounded-full hover:bg-primary/90 transition-colors ${compact ? 'text-[10px] px-2 py-1 w-full' : 'text-[11px] px-3 py-1.5'}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              onInquire?.(product);
-            }}
+        <div className="mt-3 pt-3 border-t border-slate-100">
+          <Link
+            href={`/product/${product.slug}`}
+            className={`flex items-center justify-center gap-1.5 w-full font-semibold tracking-wider uppercase text-primary hover:text-primary/70 transition-colors ${compact ? 'text-[10px] py-1' : 'text-[11px] py-1.5'}`}
           >
-            <MessageCircle className={`${compact ? 'w-3 h-3' : 'w-3.5 h-3.5'}`} />
-            Inquire
-          </a>
+            View Product
+            <ArrowRight className={`${compact ? 'w-3 h-3' : 'w-3.5 h-3.5'}`} />
+          </Link>
         </div>
       </div>
     </div>
