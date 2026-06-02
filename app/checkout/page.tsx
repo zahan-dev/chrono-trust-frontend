@@ -64,7 +64,7 @@ export default function CheckoutPage() {
           {/* Hero Banner */}
           <section className="relative w-full flex items-center justify-center overflow-hidden bg-primary min-h-[280px] h-[40vh] max-h-[400px]">
             <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/50 to-transparent" />
-            <div className="relative z-10 container mx-auto px-6 text-center pt-20 pb-8">
+            <div className="relative z-10 container mx-auto px-6 text-center pt-24 pb-8">
               <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6 border border-white/20">
                 <CheckCircle className="w-10 h-10 text-white" />
               </div>
