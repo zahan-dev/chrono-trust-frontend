@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useCart } from '@/hooks/useCart';
+import { useCart, useClearCart } from '@/hooks/useCart';
 import { useCreatePayPalOrder, useCapturePayPalOrder, useCreateOrder, type Order } from '@/hooks/useOrders';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import api from '@/lib/axios';
@@ -14,6 +14,7 @@ export default function CheckoutPage() {
   const createPayPalOrder = useCreatePayPalOrder();
   const capturePayPalOrder = useCapturePayPalOrder();
   const createOrder = useCreateOrder();
+  const clearCart = useClearCart();
 
   const [formData, setFormData] = useState({
     customerName: '',
@@ -59,20 +60,28 @@ export default function CheckoutPage() {
     const isWireTransfer = orderData.paymentMethod === 'WIRE_TRANSFER';
     return (
       <>
-        <main className="min-h-screen bg-[#FAFAFA] pt-32 pb-20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl py-12">
-            {/* Success Header */}
-            <div className="text-center mb-10">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="w-10 h-10 text-green-600" />
+        <main className="min-h-screen bg-[#FAFAFA]">
+          {/* Hero Banner */}
+          <section className="relative w-full flex items-center justify-center overflow-hidden bg-primary min-h-[280px] h-[40vh] max-h-[400px]">
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/50 to-transparent" />
+            <div className="relative z-10 container mx-auto px-6 text-center pt-20 pb-8">
+              <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6 border border-white/20">
+                <CheckCircle className="w-10 h-10 text-white" />
               </div>
-              <h1 className="font-serif text-3xl md:text-4xl text-primary mb-3">
-                Thank You for Your Order
+              <p className="text-white/60 text-xs tracking-[0.3em] uppercase font-semibold mb-3">
+                Order Confirmed
+              </p>
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-white font-medium tracking-tight mb-3 drop-shadow-sm">
+                Thank You for Your Purchase
               </h1>
-              <p className="text-slate-600">
-                Our team will review and process your order shortly.
+              <div className="w-12 h-px bg-white/30 mx-auto mb-3" />
+              <p className="text-white/70 font-light max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+                Your order has been received and is being processed
               </p>
             </div>
+          </section>
+
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl py-12">
 
             {/* Wire Transfer Notice */}
             {isWireTransfer && (
@@ -454,6 +463,8 @@ export default function CheckoutPage() {
                                 })),
                               },
                             });
+                            // Clear cart after successful order
+                            await clearCart.mutateAsync();
                             setOrderData(res.order);
                             setOrderComplete(true);
                           } catch {
@@ -491,6 +502,8 @@ export default function CheckoutPage() {
                               quantity: item.quantity,
                             })),
                           });
+                          // Clear cart after successful order
+                          await clearCart.mutateAsync();
                           setOrderData(order);
                           setOrderComplete(true);
                         } catch {

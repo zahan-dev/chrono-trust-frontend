@@ -1255,7 +1255,7 @@ function OrdersTab() {
                         <option value="AWAITING_TRANSFER">Awaiting Transfer</option>
                         <option value="PAID">Paid</option>
                         <option value="FAILED">Failed</option>
-                        <option value="CANCELLED">Cancelled</option>
+                        <option value="REFUNDED">Refunded</option>
                       </select>
                     </div>
 

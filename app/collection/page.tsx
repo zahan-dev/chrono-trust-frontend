@@ -66,13 +66,6 @@ export default function CollectionPage() {
       {/* Cinematic Hero Section */}
       <section className="relative w-full flex items-center justify-center overflow-hidden bg-primary min-h-[300px] h-[45vh] sm:h-[50vh] max-h-[580px]">
         <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1549972574-8e3e1ed6a20d?q=80&w=2000"
-            alt="Luxury watches collection"
-            fill
-            className="object-cover opacity-40"
-            priority
-          />
           <div className="absolute inset-0 bg-linear-to-t from-primary/90 via-primary/50 to-transparent" />
         </div>
 

@@ -23,7 +23,7 @@ export interface Order {
   country: string;
   note?: string;
   paymentMethod?: 'PAYPAL' | 'WIRE_TRANSFER';
-  paymentStatus?: 'PENDING' | 'AWAITING_TRANSFER' | 'PAID' | 'FAILED' | 'CANCELLED';
+  paymentStatus?: 'PENDING' | 'AWAITING_TRANSFER' | 'PAID' | 'FAILED' | 'REFUNDED';
   paypalOrderId?: string;
   paypalCaptureId?: string;
   paypalTransactionId?: string;
